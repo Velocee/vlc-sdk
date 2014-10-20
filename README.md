@@ -1,7 +1,7 @@
 vlc-sdk
 =======
 
-##Installation
+####Installation
 
 You can install install the SDK either manually or with CocoaPods (preffered).
 
@@ -11,7 +11,7 @@ Add the following line to the podfile:
 pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", :tag => "1.0.7"
 
 
-####Manualy
+#####Manualy
 
 1. Download vlc-sdk.zip and extract it somwhere. Drag the SDK resources (libVlcSdk.a, VlcSdk.h and VlcSdkRes.bundle) to the project or add them by right clicking the Project Navigator and selecting ‘Add files to...“ . It is recommended to use “Copy Items..” and “Create groups…”.
 2. Verify libVlcSdk.a id added to the project settings “Build Phases” / ”Link Binary With Libraries”.
@@ -28,7 +28,7 @@ pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", 
 6. In the project settings, add ”-ObjC” to “Other Linker Flags” located in “Build Settings” / “Linking”.
 
 
-##Post Installation
+####Post Installation
 
 
 1. In the project settings, enable “Background fetch” located in “Capabilities” / “Background Modes”.
@@ -45,12 +45,12 @@ pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", 
 }
 
 
-##Usage
+####Usage
 
 Get the sdk instance by calling [VlcSdk getObj] which returns a singleton. All methods are called from this object.
 
 
-###Initializing
+#####Initializing
 
 
 The library requires a one time initialization upon application startup. You should call the method “veloceeStart” preferably in your application delegate / didFinishLaunchingWithOptions:
@@ -59,7 +59,7 @@ The library requires a one time initialization upon application startup. You sho
 2. Call [[VlcSdk getObj] veloceeStart: <your SDK key> ].
 
 
-###Using Within a WebView
+#####Using Within a WebView
 
 The Velocee SDK provides an WebView delegate for the application’s WebView to use. In order to use Velocee’s WebView delegate you should use the SDK’s setDelegate method instead of the web view one. In case the application has a webview delegate it will be chained.
 
@@ -67,7 +67,7 @@ The Velocee SDK provides an WebView delegate for the application’s WebView to 
 2. call     [webView setDelegate:[[VlcSdk getObj]setDelegate:self]];
 
 
-###Using Within a Different View
+#####Using Within a Different View
 
 In order to use Velocee’s cache from non-webview view the application must change the relevant urls to serve the content locally with a ‘http://127.0.0.1:8080/?url’ format. For example ‘http://www.foe.com/videos/1234/master.m3u8’ should change to
 ‘http://127.0.0.1:8080/?url=http://www.foe.com/videos/1234/master.m3u8’ . This applies for all cached resources (images/videos/etc).
