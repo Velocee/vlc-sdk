@@ -33,17 +33,17 @@ pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", 
 
 1. In the project settings, enable “Background fetch” located in “Capabilities” / “Background Modes”.
 2. In your application delegate, create or edit the performFetchWithCompletionHandler method to include the following line:
-
+```
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 [[VlcSdk getObj] performFetch: (UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler];
 }
-
+```
 3. In your application delegate, create or edit handleEventsForBackgroundURLSession to include the following line:
-
+```
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
     [[VlcSdk getObj]bgCompleteNotification:completionHandler];
 }
-
+```
 
 ###Usage
 
