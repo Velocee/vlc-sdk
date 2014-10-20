@@ -1,7 +1,7 @@
 vlc-sdk
 =======
 
-####Installation
+###Installation
 
 You can install install the SDK either manually or with CocoaPods (preffered).
 
@@ -28,7 +28,7 @@ pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", 
 6. In the project settings, add ”-ObjC” to “Other Linker Flags” located in “Build Settings” / “Linking”.
 
 
-####Post Installation
+###Post Installation
 
 
 1. In the project settings, enable “Background fetch” located in “Capabilities” / “Background Modes”.
@@ -45,7 +45,7 @@ pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", 
 }
 
 
-####Usage
+###Usage
 
 Get the sdk instance by calling [VlcSdk getObj] which returns a singleton. All methods are called from this object.
 
