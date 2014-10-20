@@ -8,7 +8,7 @@ You can install install the SDK either manually or with CocoaPods (preffered).
 #####Using CocoaPods
 
 Add the following line to the podfile:
-pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", :tag => "1.0.7"
+pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "0.3"
 
 
 #####Manualy
@@ -64,7 +64,7 @@ The library requires a one time initialization upon application startup. You sho
 The Velocee SDK provides an WebView delegate for the application’s WebView to use. In order to use Velocee’s WebView delegate you should use the SDK’s setDelegate method instead of the web view one. In case the application has a webview delegate it will be chained.
 
 1. Add the sdk’s header file to your controller (#import “VlcSdk.h”).
-2. call     [webView setDelegate:[[VlcSdk getObj]setDelegate:self]];
+2. call ```[webView setDelegate:[[VlcSdk getObj]setDelegate:self]];```
 
 
 #####Using Within a Different View
@@ -72,6 +72,6 @@ The Velocee SDK provides an WebView delegate for the application’s WebView to 
 In order to use Velocee’s cache from non-webview view the application must change the relevant urls to serve the content locally with a ‘http://127.0.0.1:8080/?url’ format. For example ‘http://www.foe.com/videos/1234/master.m3u8’ should change to
 ‘http://127.0.0.1:8080/?url=http://www.foe.com/videos/1234/master.m3u8’ . This applies for all cached resources (images/videos/etc).
 The SDK provides a conversion method ‘GetCachedResourceUrl’ for convenience. It receives the URL (as NSString) and returns the resource-from-cache URL (as NSString). In case the input URL cannot be found in the cache the method returns the input unchanged. For example,
+```
 NSString *cachedUrl = [[VlcSdk getObj]GetCachedResourceUrl:inputUrl];
-
-
+```
