@@ -14,7 +14,7 @@ pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "0.3"
 
 #####Manualy
 
-1. Download vlc-sdk.zip and extract it somwhere. Drag the SDK resources (libVlcSdk.a, VlcSdk.h and VlcSdkRes.bundle) to the project or add them by right clicking the Project Navigator and selecting ‘Add files to...“ . It is recommended to use “Copy Items..” and “Create groups…”.
+1. Download vlc-sdk as a zip file and extract it somewhere. Drag the SDK resources (libVlcSdk.a, VlcSdk.h and VlcSdkRes.bundle) to the project or add them by right clicking the Project Navigator and selecting ‘Add files to...“ . It is recommended to use “Copy Items..” and “Create groups…”.
 2. Verify libVlcSdk.a id added to the project settings “Build Phases” / ”Link Binary With Libraries”.
 4. Verify VlcSdkRes.bundle is added to the project settings “Build Phases” / “Copy Bundle Resources”.
 5. Add the following frameworks/libraries to the project settings “Build Phases” / “Link Binary With Libraries”:
