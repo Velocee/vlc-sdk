@@ -38,7 +38,7 @@ pod "VlcSdk", :git => "https://eli_babila@bitbucket.org/eli_babila/vlcsdk.git", 
 [[VlcSdk getObj] performFetch: (UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler];
 }
 ```
-3. In your application delegate, create or edit handleEventsForBackgroundURLSession to include the following line:
+In your application delegate, create or edit handleEventsForBackgroundURLSession to include the following line:
 ```
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler {
     [[VlcSdk getObj]bgCompleteNotification:completionHandler];
