@@ -231,7 +231,7 @@ function modifyYTLinksFromList(vidsArray)
                 console.log('set listener');
                 links[i].addEventListener('click', function(){
                                           //setYTEndPlayListener(txt);
-                                          callObjCEx('yt_video_started', txt, 0);
+                                          callObjCEx('yt_video_started', getCleanYouTubeUrl(txt), 0);
                                           //setTimeout(setYTEndPlayListener(txt), 30000);
                                           });
             }
@@ -420,9 +420,10 @@ function modifyWallaVidLinks(vidsArray) {
             }
             links[i].setAttribute('vlc', cached);
             if (cached == 1) {
-                if (links[i].children[0].src.indexOf("play.png")!=-1) {
+                if  ((links[i].children[0].className == "icon play") ||
+                    (links[i].children[0].src.indexOf("play.png")!=-1)) {
                     console.log("set shadow");
-                    links[i].parentElement.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                    links[i].children[0].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
                 } else {
                     console.log("no shadow set");
                 }
@@ -466,7 +467,7 @@ function markWallaVideoLinksJsonP(vidsArray) {
               if (searchStringInArray (s1, vidsArray)!=-1) {
                   if (node.children[1].children[0].src.indexOf("play.png")!=-1) {
                     console.log("set shadow");
-                    node.parentElement.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                    node.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
                   } else {
                     console.log("no shadow set");
                   }
@@ -604,13 +605,22 @@ function onPlayerReady(event) {
     //event.target.playVideo();
 }
 
+
+function getCleanYouTubeUrl(url) {
+    var x = url.lastIndexOf('enablejsapi=');
+    if (x == -1)
+        return url;
+    return url.substring(0, x-1);
+}
+
+
 function onPlayerStateChange(event) {
     var lplayer = event.target;
     //if (lplayer.url == currentYTPlayer.url){
     //    cachedVid = false;
     //}
     currentYTPlayer = lplayer;
-    var url = lplayer.getVideoUrl();
+    var url = getCleanYouTubeUrl(lplayer.getVideoUrl());
     var embedCode = lplayer.getVideoEmbedCode();
     var iframe = lplayer.getIframe();
     var cachedVid = iframe.getAttribute('vlc')=='1';
@@ -638,7 +648,7 @@ function onPlayerStateChange(event) {
     }
     else if (event.data == YT.PlayerState.BUFFERING) {
         console.log('BUFFERING');
-        logObjCEx('BUFFERING');
+        logObjC('BUFFERING');
         //playYTFromCache(lplayer);
     }
     else if (event.data == YT.PlayerState.CUED){
@@ -846,8 +856,10 @@ function endVideo() {
 function pauseVideo() {
     console.log('video paused:'+this.src);
     var video = vlcPlayer;
-    if (!video.webkitDisplayingFullscreen)
+    if (!video.webkitDisplayingFullscreen) {
+        console.log("Not in full screen. Ending video");
         endVideo();
+    }
 }
 
 function onVlcVideoBeginsFullScreen() {
@@ -860,7 +872,7 @@ function onVlcVideoBeginsFullScreen() {
     if (this.src.indexOf('127.0.0.1')>-1){
         cached = 1;
     }
-    callObjCEx('video_started', rurl, cached);
+    callObjCEx('video_started', getCleanYouTubeUrl(rurl), cached);
 }
 
 function onVlcVideoEndsFullScreen() {
@@ -872,10 +884,13 @@ function onVlcVideoEndsFullScreen() {
     if (this.src.indexOf('127.0.0.1')>-1){
         cached = 1;
     }
-    callObjCEx('video_ended', rurl, cached);
+    callObjCEx('video_ended', getCleanYouTubeUrl(rurl), cached);
     if (currentYTPlayer){
-        console.log("Cue Video:"+currentYTUrl);
-        currentYTPlayer.cueVideoByUrl(currentYTUrl, 0, 0);
+        console.log("onVlcVideoEndsFullScreen YT State:"+YT.PlayerState);
+        if (currentYTPlayer.getPlayerState() != YT.PlayerState.CUED) {
+            console.log("Cue Video:"+currentYTUrl);
+            currentYTPlayer.cueVideoByUrl(currentYTUrl, 0, 0);
+        }
     }
 }
 
