@@ -391,7 +391,7 @@ function modifyWallaVidLinks(vidsArray) {
         cached = 0;
         var video = links[i];
         var s1 = links[i].href;
-        if (s1.indexOf('.mp4')>-1) {
+        if ((s1.indexOf('.mp4')>-1)&&(s1.indexOf('mintmark')>-1)) {
             if (video.getAttribute('vlc')) {
                 count++;
                 continue;
@@ -901,6 +901,48 @@ function getUrlToReport(url) {
     }
     return url;
 }
+
+//
+
+/*******************************
+ *** Ynet App Links Link Bg ***
+ *******************************/
+function markYnetAppVideoLinks(vidsArray) {
+    console.log("modify Ynet App Links");
+    var links = document.links;
+    var count = 0;
+    var cached = 0;
+    for(var i = 0; i< links.length; i++){
+        cached = 0;
+        var video = links[i];
+        var s1 = links[i].href;
+        if (s1.indexOf('www.ynet.co.il/video?')>-1) {
+            console.log("Ynet video:"+s1);
+            if (video.getAttribute('vlc')) {
+                console.log("Found vlc flag");
+                count++;
+                continue;
+            }
+            if (s1.indexOf('127.0.0.1:8080')>-1) {
+                count++;
+                continue;
+            }
+            count++;
+            console.log('found video link:'+s1);
+            if (searchStringInArray (s1, vidsArray)!=-1) {
+                console.log("Found cached Ynet App Video");
+                cached = 1;
+                cachedCount++;
+                count++;
+                links[i].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                continue;
+            }
+        }
+    }
+    console.log("modify Ynet App Links changed:"+count.toString());
+    return cachedCount.toString();
+}
+
 
 /*************************
  *** Utility functions ***

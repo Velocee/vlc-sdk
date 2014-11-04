@@ -8,7 +8,6 @@
 //@import UIKit;
 //#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 
 typedef enum
@@ -53,12 +52,12 @@ typedef enum
 
 
 
-@interface VlcSdk : UIResponder<UIWebViewDelegate, UITabBarControllerDelegate>
+@interface VlcSdk : UIResponder<UITabBarControllerDelegate>
 
 @property (copy, nonatomic) void (^backgroundSessionCompletionHandler)();
 
 +(VlcSdk *)getObj;
--(id)setDelegate:(UIViewController *)view;
+-(id)setDelegate:(UIViewController <UIWebViewDelegate> *)view;
 -(void)veloceeStart:(NSString *)key;
 -(void)veloceeDlComplete;
 -(void) addToReadingList :(NSString*)pageUrl :(NSString*)pageTitle;
@@ -90,3 +89,10 @@ typedef enum
 
 
 @end
+
+@interface NSObject (VlcWebView)
+
+@property (nonatomic, strong) NSObject *veloceeWebViewDelegate;
+
+@end
+
