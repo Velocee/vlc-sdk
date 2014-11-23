@@ -679,8 +679,8 @@ function playYTFromCache(lplayer) {
     //lplayer.stopVideo();
     //setTimeout(function(){lplayer.cueVideoByUrl(url,0,0)}, 1000);
     //newUrl = getProxyUrl("http://www.youtube.com/embed/98GpBkYidGw");
-    var newUrl = getProxyUrl(currentYTUrl);
-    playVideoWitUrl(newUrl);
+    var anewUrl = getProxyUrl(currentYTUrl);
+    playVideoWitUrl(anewUrl);
 }
 
 function loadYTApi() {
