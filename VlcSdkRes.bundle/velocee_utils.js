@@ -29,7 +29,7 @@ function vlcOnPageLoad()
     //End 02/2014
     //disable context menu
     //logObjC("vlcOnPageLoad");
-    document.body.style.webkitTouchCallout='none';
+    //document.body.style.webkitTouchCallout='none';
     //setTimeout(modifyYTLinks, 5000);
     //setTimeout(vlcHtml5VideoProxy(), 5000);
     addVlcPlayer();
@@ -461,9 +461,10 @@ function markWallaVideoLinksJsonP(vidsArray) {
             var z = "http://ws.walla.co.il/flvpl/?id="+u[x].href.split('=')[1]+"&type=jsonp";
             jsonp(z, u[x], function(node,data) {
               var s1 = data.video_src_iphone;
+              window.vlc_walla_vid = s1;
               //console.log("Success, got "+ s1);
-              node.onClick=null;
-              node.addEventListener('click', playVid, false);  //false
+              //node.onClick=null;
+              //node.addEventListener('click', playVid, false);  //false
               if (searchStringInArray (s1, vidsArray)!=-1) {
                   if (node.children[1].children[0].src.indexOf("play.png")!=-1) {
                     console.log("set shadow");
@@ -471,10 +472,10 @@ function markWallaVideoLinksJsonP(vidsArray) {
                   } else {
                     console.log("no shadow set");
                   }
-                  node.setAttribute('href', getProxyUrl(data.video_src_iphone));
+                  //node.setAttribute('href', getProxyUrl(data.video_src_iphone));
               }
-              else
-                  node.setAttribute('href', data.video_src_iphone);
+              //else
+                  //node.setAttribute('href', data.video_src_iphone);
               });
         }
 }
