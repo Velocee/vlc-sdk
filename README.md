@@ -34,14 +34,19 @@ pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.40
 The SDK uses the following third party libraries which must be added manually.
 
 AFNetworking
-```https://github.com/AFNetworking/AFNetworking```
+```
+https://github.com/AFNetworking/AFNetworking
+```
 
 CocoaAsyncSocket
-```https://github.com/robbiehanson/CocoaAsyncSocket```
+```
+https://github.com/robbiehanson/CocoaAsyncSocket
+```
 
 CocoaLumberjack
-```https://github.com/CocoaLumberjack/CocoaLumberjack```
-
+```
+https://github.com/CocoaLumberjack/CocoaLumberjack
+```
 
 
 ###Post Installation
