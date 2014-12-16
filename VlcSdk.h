@@ -9,6 +9,7 @@
 //#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
+#define VLCSDK_USE_PROGRESS_HUD 0
 
 typedef enum
 {

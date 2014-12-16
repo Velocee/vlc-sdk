@@ -365,10 +365,17 @@ function vlcHtml5VideoProxyFromList(vidsArray)
                 vidsCount++;
             } else {
                 video.setAttribute('vlc', 0);
+                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)");
             }
         } else {
             vidsCount++;
+            if (!video.getAttribute('vlc'))
+                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)");
         }
+        // force update
+        video.style.display='none';
+        video.offsetHeight;
+        video.style.display='';
         if (vidsCount > 5) {
             //Limit to 5 html5 videos per page to avoid memory issues
             break;
