@@ -29,6 +29,21 @@ pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.40
 6. In the project settings, add ”-ObjC” to “Other Linker Flags” located in “Build Settings” / “Linking”.
 
 
+#####Third Party Libraries
+
+The SDK uses the following third party libraries which must be added manually.
+
+AFNetworking
+```https://github.com/AFNetworking/AFNetworking```
+
+CocoaAsyncSocket
+```https://github.com/robbiehanson/CocoaAsyncSocket```
+
+CocoaLumberjack
+```https://github.com/CocoaLumberjack/CocoaLumberjack```
+
+
+
 ###Post Installation
 
 
