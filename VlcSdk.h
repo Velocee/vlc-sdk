@@ -2,26 +2,13 @@
 //  VlcSdk.h
 //  VlcSdk
 //
-//  Created by CodeLovers on 7/9/14.
+//  Created by Velocee on 7/9/14.
 //  Copyright (c) 2014 Velocee. All rights reserved.
 //
-//@import UIKit;
-//#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
-
-typedef enum
-{
-    _URLIsVideo,
-    _URLInCache,
-    _URLNotInCache,
-    _URLIsHandledByIOS,
-    _URLNotHandled,
-    _URLIsFile,
-    _URLShouldNotLoad
-}vlcURLTypes;
-
 
 typedef enum {
     vdata_clientId,
@@ -60,6 +47,7 @@ typedef enum
 +(VlcSdk *)getObj;
 -(id)setDelegate:(UIViewController <UIWebViewDelegate> *)view;
 -(void)veloceeStart:(NSString *)key;
+-(void)veloceeStart:(NSString *)key locale:(NSString *)locale;
 -(void)veloceeDlComplete;
 -(void) addToReadingList :(NSString*)pageUrl :(NSString*)pageTitle;
 -(void) performFetch: (UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
@@ -72,16 +60,16 @@ typedef enum
 
 
 /* operations */
-- (UINavigationController *) sendLogFile;
 - (NSString*) GetCachedResourceUrl:(NSString *)originalUrl;
 - (BOOL) GetCachedResourceUrlEx:(NSString **)originalUrl;
 - (NSData*) GetCachedResourceData:(NSString *)originalUrl;
+- (UINavigationController *) sendLogFile;
 - (void) SetLogLevel:(VlcLogLevels) logLevel;
+- (void) SetLocale:(NSString *)locale;
 
 /* dialogs */
 -(UIViewController *)getMoviesViewController;
 -(UIViewController *)getDeviceInfoViewController;
-//-(UIViewController *)getSyncCacheViewController;
 -(UIViewController *)getSyncCacheViewController:(UIView *)view;
 -(UIViewController *)getSiteSelectionViewController;
 -(UIViewController *)getReadingListViewController;
