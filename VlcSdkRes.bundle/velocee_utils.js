@@ -912,6 +912,7 @@ function getUrlToReport(url) {
 
 //
 
+
 /*******************************
  *** Ynet App Links Link Bg ***
  *******************************/
@@ -932,24 +933,27 @@ function markYnetAppVideoLinks(vidsArray) {
                 continue;
             }
             if (s1.indexOf('127.0.0.1:8080')>-1) {
+                links[i].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
                 count++;
                 continue;
             }
             count++;
-            console.log('found video link:'+s1);
+            //console.log('found video link:'+s1);
             if (searchStringInArray (s1, vidsArray)!=-1) {
                 console.log("Found cached Ynet App Video");
                 cached = 1;
-                cachedCount++;
                 count++;
                 links[i].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
                 continue;
             }
+            else
+                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)");
         }
     }
     console.log("modify Ynet App Links changed:"+count.toString());
     return cachedCount.toString();
 }
+
 
 
 /*************************
