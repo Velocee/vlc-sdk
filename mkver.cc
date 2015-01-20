@@ -14,7 +14,7 @@ echo "$(tput setaf 3)Pushing + Tags...$(tput sgr0)"
 git push
 git push --tags
 echo "$(tput setaf 3)Updating README...$(tput sgr0)"
-sed -i -e "s/$tag/$1/" README.md
+sed -i -e "s/$ltag/$1/" README.md
 echo "$(tput setaf 3)Updating Podspec...$(tput sgr0)"
-sed -i -e "s/$tag/$1/" vlc-sdk.podspec
+sed -i -e "s/$ltag/$1/" vlc-sdk.podspec
 echo "$(tput setaf 2)Done.$(tput sgr0)"
