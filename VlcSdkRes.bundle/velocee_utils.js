@@ -394,6 +394,7 @@ function modifyWallaVidLinks(vidsArray) {
     var links = document.links;
     var count = 0;
     var cached = 0;
+    var cachedCount = 0;
     for(var i = 0; i< links.length; i++){
         cached = 0;
         var video = links[i];
@@ -541,7 +542,7 @@ function modifyYTEmbedLinksFromList(vidsArray) {
     var count = 0;
     var modifyedCount = 0;
     setListeners = 0;
-    cachedCount = 0;
+    var cachedCount = 0;
     loadYTApi();
     var iframes = document.getElementsByTagName('iframe');
     for (var i=0; i<iframes.length; i++) {
@@ -559,6 +560,7 @@ function modifyYTEmbedLinksFromList(vidsArray) {
             if (searchStringInArray (s1, vidsArray)!=-1) {
                 console.log("Found cached YT Embed");
                 if (cachedCount >5) {
+                    frame.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)");
                     console.log("YT cached count>5");
                 }
                 else {
@@ -570,6 +572,9 @@ function modifyYTEmbedLinksFromList(vidsArray) {
                     frame.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
                 }
             }
+            else
+                frame.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)");
+
             frame.setAttribute('id', 'vid'+vlcCountYtEmbedVids);
             if (s1.indexOf('enablejsapi=1')==-1){
                 if (s1.indexOf('?')==-1) {
@@ -921,6 +926,7 @@ function markYnetAppVideoLinks(vidsArray) {
     var links = document.links;
     var count = 0;
     var cached = 0;
+    var cachedCount = 0;
     for(var i = 0; i< links.length; i++){
         cached = 0;
         var video = links[i];
@@ -942,6 +948,7 @@ function markYnetAppVideoLinks(vidsArray) {
             if (searchStringInArray (s1, vidsArray)!=-1) {
                 console.log("Found cached Ynet App Video");
                 cached = 1;
+                cachedCount++;
                 count++;
                 links[i].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
                 continue;
