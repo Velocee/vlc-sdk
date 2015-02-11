@@ -61,11 +61,13 @@ typedef enum
 
 /* operations */
 - (NSString*) GetCachedResourceUrl:(NSString *)originalUrl;
+- (NSURL*) GetCachedResourceUrlUrl:(NSURL *)originalUrl;
 - (BOOL) GetCachedResourceUrlEx:(NSString **)originalUrl;
 - (NSData*) GetCachedResourceData:(NSString *)originalUrl;
 - (UINavigationController *) sendLogFile;
 - (void) SetLogLevel:(VlcLogLevels) logLevel;
 - (void) SetLocale:(NSString *)locale;
+- (void) SetTag:(NSString *)tag;
 
 /* dialogs */
 -(UIViewController *)getMoviesViewController;

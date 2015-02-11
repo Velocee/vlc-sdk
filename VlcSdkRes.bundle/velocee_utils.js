@@ -365,7 +365,7 @@ function vlcHtml5VideoProxyFromList(vidsArray)
                 vidsCount++;
             } else {
                 video.setAttribute('vlc', 0);
-                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)");
+                
             }
         } else {
             vidsCount++;
@@ -486,6 +486,48 @@ function markWallaVideoLinksJsonP(vidsArray) {
                   //node.setAttribute('href', data.video_src_iphone);
               });
         }
+}
+
+
+
+
+/***********************************
+ *** Israel Hayom Video handling ***
+ ***********************************/
+function vlcIsraelAppModifyVidLinks(vidsArray)
+{
+    var vidsCount = 0;
+    var v = document.getElementsByTagName('a');
+    for (var i=0; i<v.length; i++) {
+        var video = v[i];
+        if (video.getAttribute('vlc')) {
+            //continue;
+            setListeners = 0;
+        }
+        var s1=video.href;
+        if ((s1.indexOf('127.0.0.1:8080')==-1)&&
+           (s1.indexOf("get_hls_direct.php?video_id=")!=-1)){
+            if (searchStringInArray (s1, vidsArray)!=-1) {
+                var vext = "mp4";
+                if (s1.indexOf('m3u8') != -1) {
+                    vext="m3u8";
+                }
+                var s2='http://127.0.0.1:8080/v.'+vext+'?url='+s1;
+                video.setAttribute('src',s2);
+                video.setAttribute('vlc', 1);
+                video.parentElement.style.boxShadow = "10px 10px 10px blue";
+            } else {
+                video.setAttribute('vlc', 0);
+                video.parentElement.style.boxShadow = "10px 10px 10px red";
+            }
+            vidsCount++;
+        }
+        if (vidsCount > 5) {
+            //Limit to 5 html5 videos per page to avoid memory issues
+            break;
+        }
+    }
+    return vidsCount.toString();
 }
 
 
