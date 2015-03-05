@@ -358,19 +358,20 @@ function vlcHtml5VideoProxyFromList(vidsArray)
                 var s2='http://127.0.0.1:8080/v.'+vext+'?url='+s1;
                 video.setAttribute('src',s2);
                 video.setAttribute('vlc', 1);
-                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.5) 0 5px 5px)");
+                video.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.5) 0 5px 5px)';
                 //DB20140513
                 //video.load();
                 count++;
                 vidsCount++;
             } else {
+                video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
                 video.setAttribute('vlc', 0);
                 
             }
         } else {
             vidsCount++;
             if (!video.getAttribute('vlc'))
-                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)");
+                video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
         }
         // force update
         video.style.display='none';
@@ -475,15 +476,11 @@ function markWallaVideoLinksJsonP(vidsArray) {
               //node.addEventListener('click', playVid, false);  //false
               if (searchStringInArray (s1, vidsArray)!=-1) {
                   if (node.children[1].children[0].src.indexOf("play.png")!=-1) {
-                    console.log("set shadow");
-                    node.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                    node.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
                   } else {
-                    console.log("no shadow set");
+                    node.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
                   }
-                  //node.setAttribute('href', getProxyUrl(data.video_src_iphone));
               }
-              //else
-                  //node.setAttribute('href', data.video_src_iphone);
               });
         }
 }
@@ -602,7 +599,7 @@ function modifyYTEmbedLinksFromList(vidsArray) {
             if (searchStringInArray (s1, vidsArray)!=-1) {
                 console.log("Found cached YT Embed");
                 if (cachedCount >5) {
-                    frame.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)");
+                    frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
                     console.log("YT cached count>5");
                 }
                 else {
@@ -611,11 +608,11 @@ function modifyYTEmbedLinksFromList(vidsArray) {
                     //continue;
                     //blue shadow
                     console.log("set yt shadow");
-                    frame.setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                    frame.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
                 }
             }
             else
-                frame.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)");
+                frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
 
             frame.setAttribute('id', 'vid'+vlcCountYtEmbedVids);
             if (s1.indexOf('enablejsapi=1')==-1){
@@ -639,6 +636,20 @@ function modifyYTEmbedLinksFromList(vidsArray) {
     }
     return count.toString();
 }
+
+function onYouTubeIframeAPIReady() {
+    console.log('onYouTubeIframeAPIReady called  (IFRAME)');
+    logObjC('onYouTubeIframeAPIReady called  (IFRAME)');
+    for (var i=0; i<vlcCountYtEmbedVids;i++) {
+        player = new YT.Player('vid'+i, {
+                               events: {
+                               'onReady': onPlayerReady,
+                               'onStateChange': onPlayerStateChange
+                               }
+        });
+    }
+}
+
 
 function onYouTubePlayerAPIReady() {
     console.log('onYouTubePlayerAPIReady called');
@@ -981,7 +992,7 @@ function markYnetAppVideoLinks(vidsArray) {
                 continue;
             }
             if (s1.indexOf('127.0.0.1:8080')>-1) {
-                links[i].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                links[i].style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
                 count++;
                 continue;
             }
@@ -992,11 +1003,11 @@ function markYnetAppVideoLinks(vidsArray) {
                 cached = 1;
                 cachedCount++;
                 count++;
-                links[i].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                links[i].style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
                 continue;
             }
             else
-                video.setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)");
+                video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
         }
     }
     console.log("modify Ynet App Links changed:"+count.toString());
