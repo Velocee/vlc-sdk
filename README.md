@@ -77,7 +77,12 @@ In your application delegate, create or edit handleEventsForBackgroundURLSession
 ###Usage
 
 
-Get the sdk instance by calling [VlcSdk getObj] which returns a singleton. All methods are called from this object.
+Get the sdk instance by calling [VlcSdk getObj] which returns a singleton. All methods are called using this object.
+
+
+#####Resource Support
+
+Supported resources are images (all types) and HTML5 videos.
 
 
 #####Initializing
@@ -99,7 +104,7 @@ The Velocee SDK provides an WebView delegate for the application’s WebView to 
 
 #####Getting Cached Videos From Within a Different View
 
-In order to use Velocee’s cache from non-webview view the application must change the relevant urls to serve the content locally. The SDK provides several conversion methods for convenience: 
+In order to use Velocee’s cache from non-webview view the application must change the relevant video urls to serve the content locally. The SDK provides several conversion methods for convenience: 
 * ```- (NSString*) GetCachedResourceUrl:(NSString *)originalUrl``` receives the URL (as NSString) and returns the resource-from-cache URL.
 * ```- (NSURL*) GetCachedResourceUrlUrl:(NSURL *)originalUrl``` is similar to the above but receives and returns a NSURL instead of NSString.
 Both methods returns the input unchanged in case the input URL cannot be found in the cache. 
