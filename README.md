@@ -6,7 +6,9 @@ vlc-sdk
 Request a SDK online at [http://sdk.velocee.com](http://sdk.velocee.com) .
 
 
+
 ###Installation
+
 
 You can install install the SDK either manually or with CocoaPods (preffered).
 
@@ -71,7 +73,9 @@ In your application delegate, create or edit handleEventsForBackgroundURLSession
 }
 ```
 
+
 ###Usage
+
 
 Get the sdk instance by calling [VlcSdk getObj] which returns a singleton. All methods are called from this object.
 
