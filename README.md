@@ -1,6 +1,11 @@
 vlc-sdk
 =======
 
+###Receiving a SDK Key
+
+Request a SDK online at [http://sdk.velocee.com](http://sdk.velocee.com) .
+
+
 ###Installation
 
 You can install install the SDK either manually or with CocoaPods (preffered).
@@ -88,11 +93,16 @@ The Velocee SDK provides an WebView delegate for the application’s WebView to 
 2. call ```[webView setDelegate:[[VlcSdk getObj]setDelegate:self]];```
 
 
-#####Using Within a Different View
+#####Getting Cached Videos From Within a Different View
 
-In order to use Velocee’s cache from non-webview view the application must change the relevant urls to serve the content locally with a ‘http://127.0.0.1:8080/?url’ format. For example ‘http://www.foe.com/videos/1234/master.m3u8’ should change to
-‘http://127.0.0.1:8080/?url=http://www.foe.com/videos/1234/master.m3u8’ . This applies for all cached resources (images/videos/etc).
-The SDK provides a conversion method ‘GetCachedResourceUrl’ for convenience. It receives the URL (as NSString) and returns the resource-from-cache URL (as NSString). In case the input URL cannot be found in the cache the method returns the input unchanged. For example,
-```
-NSString *cachedUrl = [[VlcSdk getObj]GetCachedResourceUrl:inputUrl];
-```
+In order to use Velocee’s cache from non-webview view the application must change the relevant urls to serve the content locally. The SDK provides several conversion methods for convenience: 
+* ‘- (NSString*) GetCachedResourceUrl:(NSString *)originalUrl’ receives the URL (as NSString) and returns the resource-from-cache URL.
+* ‘- (NSURL*) GetCachedResourceUrlUrl:(NSURL *)originalUrl’ is similar to the above but receives and returns a NSURL instead of NSString.
+Both methods returns the input unchanged in case the input URL cannot be found in the cache. 
+* ‘- (BOOL) GetCachedResourceUrlEx:(NSString **)originalUrl’ - returns wherever resource was cached and alter an input URL string.
+
+
+#####Labeling The Data
+
+Your application data needs to be labeled in order to fine tune Velocee's recommendation algorithem. Any text can be used as a label. In order to set the current label use the SetTag method ‘- (void) SetTag:(NSString *)tag‘.
+Once a label is set it affects all resources until a new label is set or the application is idle for a period of time.
