@@ -1,4 +1,5 @@
 // Velocee Javascript utilities
+// Version 1.2
 
 //Globals
 var adPages=new Array();
@@ -322,7 +323,7 @@ function getYTLinks2()
 /****************************
  *** HTML5 Video handling ***
  ****************************/
-function vlcHtml5VideoProxyFromList(vidsArray)
+function vlcHtml5VideoProxyFromList(vidsArray, markVids)
 {
     //alert("vlcHtml5VideoProxyFromList");
     //h = window.location.host;
@@ -358,20 +359,25 @@ function vlcHtml5VideoProxyFromList(vidsArray)
                 var s2='http://127.0.0.1:8080/v.'+vext+'?url='+s1;
                 video.setAttribute('src',s2);
                 video.setAttribute('vlc', 1);
-                video.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.5) 0 5px 5px)';
+                if (markVids) {
+                    video.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.5) 0 5px 5px)';
+                }
                 //DB20140513
                 //video.load();
                 count++;
                 vidsCount++;
             } else {
-                video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
+                if (markVids) {
+                    video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
+                }
                 video.setAttribute('vlc', 0);
                 
             }
         } else {
             vidsCount++;
-            if (!video.getAttribute('vlc'))
+            if ((!video.getAttribute('vlc')) && markVids) {
                 video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
+            }
         }
         // force update
         video.style.display='none';
@@ -390,7 +396,7 @@ function vlcHtml5VideoProxyFromList(vidsArray)
 /****************************
  *** Walla Video Handling ***
  ****************************/
-function modifyWallaVidLinks(vidsArray) {
+function modifyWallaVidLinks(vidsArray, markVids) {
     console.log("modify Walla Links");
     var links = document.links;
     var count = 0;
@@ -431,15 +437,20 @@ function modifyWallaVidLinks(vidsArray) {
             if (cached == 1) {
                 if  ((links[i].children[0].className == "icon play") ||
                     (links[i].children[0].src.indexOf("play.png")!=-1)) {
-                    console.log("set shadow");
-                    links[i].children[0].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                    //console.log("set shadow");
+                    if (markVids) {
+                        links[i].children[0].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
+                    }
                 } else {
-                    console.log("no shadow set");
+                    if (markVids) {
+                        links[i].children[0].setAttribute('style', "-webkit-filter: drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)");
+                    }
+                    //console.log("no shadow set");
                 }
             }
         }
     }
-    console.log("modify Walla Links changed:"+count.toString());
+//    console.log("modify Walla Links changed:"+count.toString());
     return cachedCount.toString();
 }
 
@@ -449,7 +460,10 @@ function modifyWallaVidLinks(vidsArray) {
 /*******************************
  *** Walla App Links Link Bg ***
  *******************************/
-function markWallaVideoLinksJsonP(vidsArray) {
+function markWallaVideoLinksJsonP(vidsArray, markVids) {
+    if (!markVids) {
+        return;
+    }
     function jsonp(url, node, callback) {
         var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
         var n = node;
@@ -491,8 +505,11 @@ function markWallaVideoLinksJsonP(vidsArray) {
 /***********************************
  *** Israel Hayom Video handling ***
  ***********************************/
-function vlcIsraelAppModifyVidLinks(vidsArray)
+function vlcIsraelAppModifyVidLinks(vidsArray, markVids)
 {
+    if (!markVids) {
+        return;
+    }
     var vidsCount = 0;
     var v = document.getElementsByTagName('a');
     for (var i=0; i<v.length; i++) {
@@ -576,8 +593,8 @@ var player;
 var currentYTPlayer = null;
 var currentYTUrl = null;
 
-function modifyYTEmbedLinksFromList(vidsArray) {
-    console.log('modifyYTEmbedLinksFromList');
+function modifyYTEmbedLinksFromList(vidsArray, markVids) {
+    //console.log('modifyYTEmbedLinksFromList');
     var count = 0;
     var modifyedCount = 0;
     setListeners = 0;
@@ -597,22 +614,29 @@ function modifyYTEmbedLinksFromList(vidsArray) {
             //ytEmbedFrame = frame;
             //frame.document.addEventListener('click', function(event) {yFrameClic(this.id);}, false);
             if (searchStringInArray (s1, vidsArray)!=-1) {
-                console.log("Found cached YT Embed");
+                //console.log("Found cached YT Embed");
                 if (cachedCount >5) {
-                    frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
-                    console.log("YT cached count>5");
+                    if (markVids) {
+                        frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
+                    }
+                    //console.log("YT cached count>5");
                 }
                 else {
                     cachedCount++;
                     isCached = 1;
                     //continue;
                     //blue shadow
-                    console.log("set yt shadow");
-                    frame.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                    //console.log("set yt shadow");
+                    if (markVids) {
+                        frame.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                    }
                 }
             }
-            else
-                frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
+            else {
+                if (markVids) {
+                    frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
+                }
+            }
 
             frame.setAttribute('id', 'vid'+vlcCountYtEmbedVids);
             if (s1.indexOf('enablejsapi=1')==-1){
@@ -974,7 +998,10 @@ function getUrlToReport(url) {
 /*******************************
  *** Ynet App Links Link Bg ***
  *******************************/
-function markYnetAppVideoLinks(vidsArray) {
+function markYnetAppVideoLinks(vidsArray, markVids) {
+    if (!markVids) {
+        return;
+    }
     console.log("modify Ynet App Links");
     var links = document.links;
     var count = 0;
