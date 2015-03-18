@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "vlc-sdk"
-  s.version      = "2.0.64.1"
+  s.version      = "2.0.65"
   s.summary      = "Velocee VlcSdk"
 
   s.description  = <<-DESC
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   }
   s.author       = { "elibabila" => "support@velocee.com" }
   s.platform     = :ios, "7.0"
-  s.source        = { :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.64.1" }
+  s.source        = { :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.65" }
   
 
   s.source_files = '*.h'
