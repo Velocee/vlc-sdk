@@ -1,7 +1,8 @@
 // Velocee Javascript utilities
-// Version 1.2
+// Version 1.3
 
 //Globals
+var veloceeUtilsVersion = 1.3;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
@@ -544,8 +545,138 @@ function vlcIsraelAppModifyVidLinks(vidsArray, markVids)
     return vidsCount.toString();
 }
 
+/*******************************************************
+ *** Israel Hayom Video handling - Brightcove Player ***
+ *******************************************************/
+function vlcIsraelAppModifyVidLinksBr(vidsArray, markVids)
+{
+    console.log('*** vlcIsraelAppModifyVidLinksBr ***'+' vids:'+vidsArray);
+    var markVids = true;
+    if (!markVids) {
+        markVids = false;
+    }
+    var vidsCount = 0;
+    var setListeners;
+    var inCache = 0;
+    var v = document.getElementsByClassName("BrightcoveExperience");
+    console.log('starting BR loop');
+    for (var i=0; i<v.length; i++) {
+        var video = v[i];
+        console.log('video:'+video.src);
+        if (video.getAttribute('vlc_handlers')) {
+            //continue;
+            console.log('set listeners: 0');
+            setListeners = 0;
+        } else {
+            setListeners = 1;
+        }
+        var s1=video.src;
+        if ((s1.indexOf('127.0.0.1:8080')==-1)&&
+            (s1.indexOf("htmlFederated")!=-1)&&(setListeners==1)){
+            console.log('handle video');
+           	var qparams = getUrlQueryParams(s1);
+           	var videoPlayer = qparams['%40videoPlayer'];
+           	var playerID = qparams['playerID'];
+           	var vidParams = "videoId="+videoPlayer+"&playerId="+playerID;
+            console.log('lookup vid params:'+vidParams);
+            if (searchStringInArrayItems (vidParams, vidsArray)!=-1) {
+                video.setAttribute('vlc', 1);
+                inCache = 1;
+                if (markVids) {
+                    video.parentElement.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                }
+            } else {
+                video.setAttribute('vlc', 0);
+                inCache = 0;
+                if (markVids) {
+                    video.parentElement.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
+                }
+            }
+            //Set listeners
+            console.log("*** Register brightcove player listeners for id:"+video.id);
+            var expId = video.id;
+            vlcRegisterBRHandlersLoop(expId, video, playerID, inCache);
+            vidsCount++;
+        } else {
+            console.log('will not handle video');
+        }
+        if (vidsCount > 5) {
+            //Limit to 5 html5 videos per page to avoid memory issues
+            break;
+        }
+    }
+    return vidsCount.toString();
+}
+
+var vlcBRRetryes = 0;
+
+function vlcRegisterBRHandlersLoop(expId, video, playerID, inCache) {
+    if (brightcove.api==null) {
+        return;
+    }
+    var res = vlcRegisterBRHandlers(expId, video, playerID, inCache);
+    if ((!res)&&(vlcBRRetryes<6)) {
+        console.log('null player schedule retry');
+        setTimeout(vlcRegisterBRHandlers(expId, video, playerID, inCache), 300);
+        vlcBRRetryes ++;
+    }
+}
 
 
+function vlcRegisterBRHandlers(expId, video, playerID, inCache) {
+    console.log('starting vlcRegisterBRHandlers video:'+video);
+    if (video.getAttribute('vlc_handlers')) {
+        return true;
+    }
+    var vbplayer = brightcove.api.getExperience(expId);
+    if (vbplayer == null) {
+        return false;
+    }
+    console.log("got player:"+vbplayer.id);
+    var modVP = vbplayer.getModule(brightcove.api.modules.APIModules.VIDEO_PLAYER);
+    console.log("got modVP:"+modVP.experience.id);
+    modVP.addEventListener(brightcove.api.events.MediaEvent.BEGIN, function(event) {console.log('begin')});
+    modVP.addEventListener(brightcove.api.events.MediaEvent.BUFFER_BEGIN, function(event) {console.log('BUFFER_BEGIN'); vlcHandleBREvent(event);});
+    modVP.addEventListener(brightcove.api.events.MediaEvent.PLAY, function(event) {
+                           console.log('PLAY');
+                           vlcHandleBREvent(event, playerID, inCache);
+                           });
+    modVP.addEventListener(brightcove.api.events.MediaEvent.STOP, function(event) {
+                           console.log('STOP');
+                           vlcHandleBREvent(event, playerID, inCache);
+                           });
+    video.setAttribute('vlc_handlers', 1);
+    return true;
+}
+
+function onTemplateReady(event) {
+    console.log("on Template Ready");
+}
+
+//Temporary remove after testing
+var brEvent;
+
+function vlcHandleBREvent (event, playerID, inCache) {
+    brEvent = event;
+    console.log("Got BR Event:"+event.type);
+    console.log("PlayerID:"+playerID);
+    if (event.type == "mediaPlay") {
+        console.log("Play started. report to app:"+event.media.defaultURL);
+        var pubId = event.media.publisherID;
+        var videoUrl = event.media.defaultURL+"&playerId="+playerID+"&lineupId=&affiliateId=&pubId="+pubId;
+        console.log("Full Video URL:"+videoUrl);
+        logObjC("BR Play started:"+videoUrl);
+        callObjCEx('video_started', videoUrl, inCache);
+    }
+    else if (event.type == "mediaStop") {
+        console.log("Play stopped. report to app:"+event.media.defaultURL);
+        var pubId = event.media.publisherID;
+        var videoUrl = event.media.defaultURL+"&playerId="+playerID+"&lineupId=&affiliateId=&pubId="+pubId;
+        console.log("Full Video URL:"+videoUrl);
+        logObjC("BR Play started:"+videoUrl);
+        callObjCEx('video_ended', videoUrl, inCache);
+    }
+}
 
 function getWallaAppVideoLinks() {
 	var x=0,y=0,z;
@@ -1070,6 +1201,17 @@ function searchStringInArray (str, strArray) {
     for (var j=0; j<strArray.length; j++) {
         //if (strArray[j].match(str)) return j;
         if (str.indexOf(strArray[j])!=-1) {
+            return j;
+        }
+    }
+    return -1;
+}
+
+function searchStringInArrayItems (str, strArray) {
+    for (var j=0; j<strArray.length; j++) {
+        //if (strArray[j].match(str)) return j;
+        var item = strArray[j];
+        if (item.indexOf(str)!=-1) {
             return j;
         }
     }
