@@ -3,7 +3,7 @@ vlc-sdk
 
 ###Receiving a SDK Key
 
-Request a SDK key online at [http://sdk.velocee.com](http://sdk.velocee.com) .
+Request a SDK key online at [http://app.velocee.com/generic](http://app.velocee.com/generic) .
 
 
 
