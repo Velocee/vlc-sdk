@@ -1,8 +1,8 @@
 // Velocee Javascript utilities
-// Version 1.3
+// Version 1.4
 
 //Globals
-var veloceeUtilsVersion = 1.3;
+var veloceeUtilsVersion = 1.4;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
@@ -54,26 +54,26 @@ function vlcHtml5VideoProxy()
     if (h.indexOf('ynet')==-1) {
         return;
     }
-	var videos = document.getElementsByTagName('video');
-	for (var i=0; i<videos.length; i++) {
-		video = videos[i];
-		s1=video.getAttribute('src');
+    var videos = document.getElementsByTagName('video');
+    for (var i=0; i<videos.length; i++) {
+        video = videos[i];
+        s1=video.getAttribute('src');
         if (s1.indexOf('127.0.0.1:8080')==-1) {
             s2='http://127.0.0.1:8080/v.mp4?url='+s1;
             video.setAttribute('src',s2);
             //video.load();
         }
-	}
+    }
     //alert('Video Redirected');
 }
 
 function vlcVideoLinksToProxy()
 {
     //alert('converting links');
-	//var videos = document.getElementsByTagName('video');
+    //var videos = document.getElementsByTagName('video');
     var videos = document.querySelectorAll('a[name]');
-	for (var i=0; i<videos.length; i++) {
-		var video = videos[i];
+    for (var i=0; i<videos.length; i++) {
+        var video = videos[i];
         if (video.name == 'video-link') {
             s1=video.getAttribute('href');
             if (s1.indexOf('127.0.0.1:8080')==-1) {
@@ -82,7 +82,7 @@ function vlcVideoLinksToProxy()
                 video.load();
             }
         }
-	}
+    }
     //alert('Video Redirected');
 }
 
@@ -276,8 +276,8 @@ function setYTEndPlayListener(watchUrl) {
         }
         console.log('Add yt_video_ended event');
         currentVid.addEventListener('webkitendfullscreen', function(){
-                                        callObjCEx('yt_video_ended', watchUrl, 0);
-                                        //alert(watchUrl);
+                                    callObjCEx('yt_video_ended', watchUrl, 0);
+                                    //alert(watchUrl);
                                     }, false);
         return true;
     }
@@ -333,9 +333,9 @@ function vlcHtml5VideoProxyFromList(vidsArray, markVids)
     var count = 0;
     var vidsCount = 0;
     var setListeners = 1;
-	var videos = document.getElementsByTagName('video');
-	for (var i=0; i<videos.length; i++) {
-		var video = videos[i];
+    var videos = document.getElementsByTagName('video');
+    for (var i=0; i<videos.length; i++) {
+        var video = videos[i];
         if (video.id == "vlcPlayer") {
             continue;
         }
@@ -343,7 +343,7 @@ function vlcHtml5VideoProxyFromList(vidsArray, markVids)
             //continue;
             setListeners = 0;
         }
-		var s1=video.getAttribute('src');
+        var s1=video.getAttribute('src');
         if (s1.indexOf('127.0.0.1:8080')==-1) {
             //Add event listener
             //video.addEventListener('webkitbeginfullscreen', onVideoBeginsFullScreen, false);
@@ -388,7 +388,7 @@ function vlcHtml5VideoProxyFromList(vidsArray, markVids)
             //Limit to 5 html5 videos per page to avoid memory issues
             break;
         }
-	}
+    }
     vlcAddedHTML5Listeners = true;
     //alert('HTML5 Video Redirected'+count.toString());
     return count.toString();
@@ -437,7 +437,7 @@ function modifyWallaVidLinks(vidsArray, markVids) {
             links[i].setAttribute('vlc', cached);
             if (cached == 1) {
                 if  ((links[i].children[0].className == "icon play") ||
-                    (links[i].children[0].src.indexOf("play.png")!=-1)) {
+                     (links[i].children[0].src.indexOf("play.png")!=-1)) {
                     //console.log("set shadow");
                     if (markVids) {
                         links[i].children[0].setAttribute('style', "-webkit-filter: drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)");
@@ -451,7 +451,7 @@ function modifyWallaVidLinks(vidsArray, markVids) {
             }
         }
     }
-//    console.log("modify Walla Links changed:"+count.toString());
+    //    console.log("modify Walla Links changed:"+count.toString());
     return cachedCount.toString();
 }
 
@@ -479,24 +479,24 @@ function markWallaVideoLinksJsonP(vidsArray, markVids) {
         script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
         document.body.appendChild(script);
     }
-	var u = document.getElementsByTagName('a');
+    var u = document.getElementsByTagName('a');
     for (var x=0;x<u.length;x++)
         if (u[x].href.indexOf("walla://playvideo")!=-1) {
             var z = "http://ws.walla.co.il/flvpl/?id="+u[x].href.split('=')[1]+"&type=jsonp";
             jsonp(z, u[x], function(node,data) {
-              var s1 = data.video_src_iphone;
-              window.vlc_walla_vid = s1;
-              //console.log("Success, got "+ s1);
-              //node.onClick=null;
-              //node.addEventListener('click', playVid, false);  //false
-              if (searchStringInArray (s1, vidsArray)!=-1) {
+                  var s1 = data.video_src_iphone;
+                  window.vlc_walla_vid = s1;
+                  //console.log("Success, got "+ s1);
+                  //node.onClick=null;
+                  //node.addEventListener('click', playVid, false);  //false
+                  if (searchStringInArray (s1, vidsArray)!=-1) {
                   if (node.children[1].children[0].src.indexOf("play.png")!=-1) {
-                    node.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                  node.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
                   } else {
-                    node.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
+                  node.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
                   }
-              }
-              });
+                  }
+                  });
         }
 }
 
@@ -521,7 +521,7 @@ function vlcIsraelAppModifyVidLinks(vidsArray, markVids)
         }
         var s1=video.href;
         if ((s1.indexOf('127.0.0.1:8080')==-1)&&
-           (s1.indexOf("get_hls_direct.php?video_id=")!=-1)){
+            (s1.indexOf("get_hls_direct.php?video_id=")!=-1)){
             if (searchStringInArray (s1, vidsArray)!=-1) {
                 var vext = "mp4";
                 if (s1.indexOf('m3u8') != -1) {
@@ -608,6 +608,9 @@ function vlcIsraelAppModifyVidLinksBr(vidsArray, markVids)
     return vidsCount.toString();
 }
 
+
+
+
 var vlcBRRetryes = 0;
 
 function vlcRegisterBRHandlersLoop(expId, video, playerID, inCache) {
@@ -678,16 +681,61 @@ function vlcHandleBREvent (event, playerID, inCache) {
     }
 }
 
-function getWallaAppVideoLinks() {
-	var x=0,y=0,z;
-	while (x != -1) {
-		x = document.body.innerHTML.indexOf("walla://playvideo?itemID=",y);
-		if (x != -1) {
-			y = document.body.innerHTML.indexOf("\"",x+25);
-            callObjCEx('walla_app_video_url', vids.push(document.body.innerHTML.slice(x+25,y)), 0);
-		}
-	}
+
+
+/***********************************
+ *** One Video handling          ***
+ ***********************************/
+function vlcOneAppModifyVidLinks(vidsArray, markVids)
+{
+    if (!markVids) {
+        return;
+    }
+    var vidsCount = 0;
+    var v = document.querySelectorAll('a[href$=".m4v"]');
+    for (var i=0; i<v.length; i++) {
+        var video = v[i];
+        var s1=video.href;
+        if (s1.indexOf('127.0.0.1:8080')==-1){
+            if (searchStringInArray (s1, vidsArray)!=-1) {
+                var vext = "mp4";
+                if (s1.indexOf('m3u8') != -1) {
+                    vext="m3u8";
+                }
+                var s2='http://127.0.0.1:8080/v.'+vext+'?url='+s1;
+                video.setAttribute('src',s2);
+                video.setAttribute('vlc', 1);
+                video.parentElement.style.boxShadow = "3px 3px 3px 3px blue";
+            } else {
+                video.setAttribute('vlc', 0);
+                video.parentElement.style.boxShadow = "3px 3px 3px 3px red";
+            }
+            vidsCount++;
+        } else {
+            video.setAttribute('vlc', 0);
+            video.parentElement.style.boxShadow = "3px 3px 3px 3px red";
+        }
+        if (vidsCount > 5) {
+            //Limit to 5 html5 videos per page to avoid memory issues
+            break;
+        }
+    }
+    return vidsCount.toString();
 }
+
+
+
+function getWallaAppVideoLinks() {
+    var x=0,y=0,z;
+    while (x != -1) {
+        x = document.body.innerHTML.indexOf("walla://playvideo?itemID=",y);
+        if (x != -1) {
+            y = document.body.innerHTML.indexOf("\"",x+25);
+            callObjCEx('walla_app_video_url', vids.push(document.body.innerHTML.slice(x+25,y)), 0);
+        }
+    }
+}
+
 
 
 function onVideoBeginsFullScreen() {
@@ -695,9 +743,14 @@ function onVideoBeginsFullScreen() {
     //document.location.href="http://vlc_event/?video-started="+vid_url;
     console.log('onVideoBeginsFullScreen:');
     this.play();
-    var rurl = getUrlToReport(this.src);
+    
+    var src = this.src;
+    if (this.src.length == 0) {
+        src = this.currentSrc;
+    }
+    var rurl = getUrlToReport(src);
     var cached = 0;
-    if (this.src.indexOf('127.0.0.1')>-1){
+    if (src.indexOf('127.0.0.1')>-1){
         cached = 1;
     }
     callObjCEx('video_started', rurl, cached);
@@ -706,13 +759,18 @@ function onVideoBeginsFullScreen() {
 /* HTML5 Video ended full screen */
 function onVideoEndsFullScreen() {
     //document.location.href="vlc_event://video-ended";
-    var rurl = getUrlToReport(this.src);
+    var src = this.src;
+    if (this.src.length == 0) {
+        src = this.currentSrc;
+    }
+    var rurl = getUrlToReport(src);
     var cached = 0;
-    if (this.src.indexOf('127.0.0.1')>-1){
+    if (src.indexOf('127.0.0.1')>-1){
         cached = 1;
     }
     callObjCEx('video_ended', rurl, cached);
 }
+
 
 /**************************************
  *** YouTube Embeded Video handling ***
@@ -768,7 +826,7 @@ function modifyYTEmbedLinksFromList(vidsArray, markVids) {
                     frame.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
                 }
             }
-
+            
             frame.setAttribute('id', 'vid'+vlcCountYtEmbedVids);
             if (s1.indexOf('enablejsapi=1')==-1){
                 if (s1.indexOf('?')==-1) {
@@ -801,7 +859,7 @@ function onYouTubeIframeAPIReady() {
                                'onReady': onPlayerReady,
                                'onStateChange': onPlayerStateChange
                                }
-        });
+                               });
     }
 }
 
@@ -811,11 +869,11 @@ function onYouTubePlayerAPIReady() {
     logObjC('onYouTubePlayerAPIReady called');
     for (var i=0; i<vlcCountYtEmbedVids;i++) {
         player = new YT.Player('vid'+i, {
-                           events: {
-                           'onReady': onPlayerReady,
-                           'onStateChange': onPlayerStateChange
-                           }
-                           });
+                               events: {
+                               'onReady': onPlayerReady,
+                               'onStateChange': onPlayerStateChange
+                               }
+                               });
     }
 }
 
@@ -937,19 +995,19 @@ function yFrameLoad(frame) {
 }
 
 /*
-function handleYTEmbedCachedVideo(frame) {
-    return false;
-    //frame.onLoad = yFrameLoad(frame);
-    //return true;
-    //logObjC("Found YT Cached Video");
-    //frame.document.addEventListener('click', function(event) {yFrameClic(this.id);}, false);
-    s1 = frame.src;
-    if (s1.indexOf('127.0.0.1:8080')==-1) {
-        s2='http://127.0.0.1:8080/?url='+s1;
-        iframes[i].setAttribute('src',s2);
-    }
-}
-*/
+ function handleYTEmbedCachedVideo(frame) {
+ return false;
+ //frame.onLoad = yFrameLoad(frame);
+ //return true;
+ //logObjC("Found YT Cached Video");
+ //frame.document.addEventListener('click', function(event) {yFrameClic(this.id);}, false);
+ s1 = frame.src;
+ if (s1.indexOf('127.0.0.1:8080')==-1) {
+ s2='http://127.0.0.1:8080/?url='+s1;
+ iframes[i].setAttribute('src',s2);
+ }
+ }
+ */
 
 /*
  function onYouTubePlayerAPIReady() {
@@ -1183,9 +1241,9 @@ function markYnetAppVideoLinks(vidsArray, markVids) {
 function getUrlQueryParams(aurl) {
     var vars = {};
     var parts = aurl.replace(/[?&]+([^=&]+)=([^&]*)/gi,
-                                             function(m,key,value) {
-                                             vars[key] = value;
-                                             });
+                             function(m,key,value) {
+                             vars[key] = value;
+                             });
     return vars;
 }
 
@@ -1197,7 +1255,11 @@ function getProxyUrl(aurl){
     return aurl;
 }
 
+
 function searchStringInArray (str, strArray) {
+    console.log("searching:");
+    console.log("==> "+JSON.stringify(str));
+    console.log("<== "+strArray);
     for (var j=0; j<strArray.length; j++) {
         //if (strArray[j].match(str)) return j;
         if (str.indexOf(strArray[j])!=-1) {
@@ -1206,6 +1268,7 @@ function searchStringInArray (str, strArray) {
     }
     return -1;
 }
+
 
 function searchStringInArrayItems (str, strArray) {
     for (var j=0; j<strArray.length; j++) {
@@ -1301,38 +1364,73 @@ function blockZuznowPopup()
     }
 }
 
+function vlcModifyTestVideos(vidsArray, markVids) {
+    var c = 0, setListeners = 1;
+    if (!markVids) {
+        return c;
+    }
+    var v = document.querySelectorAll(".test_website_video video");
+    for (var q=0;q<v.length;q++) {
+        var s = v[q].currentSrc;
+        if (v[q].getAttribute('vlc')) {
+            setListeners = 0;
+        }
+        if (s.indexOf('127.0.0.1:8080')==-1) {
+            if (setListeners) {
+                v[q].addEventListener('webkitbeginfullscreen', onVideoBeginsFullScreen, false);
+                v[q].addEventListener('webkitendfullscreen', onVideoEndsFullScreen, false);
+            }
+            if (searchStringInArray (s, vidsArray)!=-1) {
+                v[q].style.boxShadow="3px 3px 2px rgb(0,0,225)";
+                v[q].style.border="1px solid blue";
+            }
+            else {
+                v[q].style.boxShadow="3px 3px 2px rgb(225,0,0)";
+                v[q].style.border="1px solid red";
+            }
+            v[q].setAttribute('vlc', 1);
+            c++;
+        }
+        else {
+            v[q].style.boxShadow="3px 3px 2px rgb(0,0,225)";
+            v[q].style.border="1px solid blue";
+        }
+    }
+    return c;
+}
+
 
 /*
  currentVid.addEventListener('webkitendfullscreen', function(){
  callObjC('yt_video_ended', watchUrl);
-if (video.getAttribute('vlc')) {
-    //continue;
-    setListeners = 0;
-}
-s1=video.getAttribute('src');
-if (s1.indexOf('127.0.0.1:8080')==-1) {
-    //Add event listener
-    //video.addEventListener('webkitbeginfullscreen', onVideoBeginsFullScreen, false);
-    if (setListeners) {
-        video.addEventListener('webkitbeginfullscreen', function(){onVideoBeginsFullScreen(s1);}, false);
-        video.addEventListener('webkitendfullscreen', function(){onVideoEndsFullScreen(s1);}, false);
-    }
-    if (searchStringInArray (s1, vidsArray)!=-1) {
-        s2='http://127.0.0.1:8080/v.mp4?url='+s1;
-        video.setAttribute('src',s2);
-        video.setAttribute('vlc', 1);
-        video.load();
-        count++;
-        vidsCount++;
-    } else {
-        video.setAttribute('vlc', 0);
-    }
-} else {
-    vidsCount++;
-}
-if (vidsCount > 5) {
-    //Limit to 5 html5 videos per page to avoid memory issues
-    break;
-}
-*/
+ if (video.getAttribute('vlc')) {
+ //continue;
+ setListeners = 0;
+ }
+ s1=video.getAttribute('src');
+ if (s1.indexOf('127.0.0.1:8080')==-1) {
+ //Add event listener
+ //video.addEventListener('webkitbeginfullscreen', onVideoBeginsFullScreen, false);
+ if (setListeners) {
+ video.addEventListener('webkitbeginfullscreen', function(){onVideoBeginsFullScreen(s1);}, false);
+ video.addEventListener('webkitendfullscreen', function(){onVideoEndsFullScreen(s1);}, false);
+ }
+ if (searchStringInArray (s1, vidsArray)!=-1) {
+ s2='http://127.0.0.1:8080/v.mp4?url='+s1;
+ video.setAttribute('src',s2);
+ video.setAttribute('vlc', 1);
+ video.load();
+ count++;
+ vidsCount++;
+ } else {
+ video.setAttribute('vlc', 0);
+ }
+ } else {
+ vidsCount++;
+ }
+ if (vidsCount > 5) {
+ //Limit to 5 html5 videos per page to avoid memory issues
+ break;
+ }
+ */
 
