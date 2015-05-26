@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "$(tput setaf 3)Copying .h file...$(tput sgr0)"
+read -p "Enter your name : " 

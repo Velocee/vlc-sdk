@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "$(tput setaf 3)Copying .h file...$(tput sgr0)"
+erea d -p "Enter your name : " 
+
+
+
+
