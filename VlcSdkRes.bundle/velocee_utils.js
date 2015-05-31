@@ -1,8 +1,8 @@
 // Velocee Javascript utilities
-// Version 1.4
+// Version 1.5
 
 //Globals
-var veloceeUtilsVersion = 1.4;
+var veloceeUtilsVersion = 1.5;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
@@ -692,7 +692,7 @@ function vlcOneAppModifyVidLinks(vidsArray, markVids)
         return;
     }
     var vidsCount = 0;
-    var v = document.querySelectorAll('a[href$=".m4v"]');
+    var v = document.querySelectorAll('a[href*=".m4v"]');
     for (var i=0; i<v.length; i++) {
         var video = v[i];
         var s1=video.href;
