@@ -2,7 +2,7 @@
 // Version 1.5
 
 //Globals
-var veloceeUtilsVersion = 1.5;
+var veloceeUtilsVersion = 1.52;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
@@ -706,14 +706,17 @@ function vlcOneAppModifyVidLinks(vidsArray, markVids)
                 video.setAttribute('src',s2);
                 video.setAttribute('vlc', 1);
                 video.parentElement.style.boxShadow = "3px 3px 3px 3px blue";
+                video.style.boxShadow = "3px 3px 3px 3px blue";
             } else {
                 video.setAttribute('vlc', 0);
                 video.parentElement.style.boxShadow = "3px 3px 3px 3px red";
+                video.style.boxShadow = "3px 3px 3px 3px red";
             }
             vidsCount++;
         } else {
             video.setAttribute('vlc', 0);
             video.parentElement.style.boxShadow = "3px 3px 3px 3px red";
+            video.style.boxShadow = "3px 3px 3px 3px red";
         }
         if (vidsCount > 5) {
             //Limit to 5 html5 videos per page to avoid memory issues
