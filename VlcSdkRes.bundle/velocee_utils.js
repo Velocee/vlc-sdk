@@ -2,7 +2,7 @@
 // Version 1.5
 
 //Globals
-var veloceeUtilsVersion = 1.52;
+var veloceeUtilsVersion = 1.53;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
@@ -551,10 +551,6 @@ function vlcIsraelAppModifyVidLinks(vidsArray, markVids)
 function vlcIsraelAppModifyVidLinksBr(vidsArray, markVids)
 {
     console.log('*** vlcIsraelAppModifyVidLinksBr ***'+' vids:'+vidsArray);
-    var markVids = true;
-    if (!markVids) {
-        markVids = false;
-    }
     var vidsCount = 0;
     var setListeners;
     var inCache = 0;
