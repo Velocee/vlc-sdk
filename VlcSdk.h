@@ -68,6 +68,13 @@ typedef enum
 - (void) SetLogLevel:(VlcLogLevels) logLevel;
 - (void) SetLocale:(NSString *)locale;
 - (void) SetTag:(NSString *)tag;
+- (void) EnableAudio:(BOOL)enable;
+- (BOOL) GetAudioStatus;
+- (void) flushResources;
+
+/* audio */
+-(void) ResumeAudio;
+
 
 /* dialogs */
 -(UIViewController *)getMoviesViewController;
