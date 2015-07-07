@@ -16,7 +16,7 @@ You can install install the SDK either manually or with CocoaPods (preffered).
 
 Add the following line to the podfile:
 ```
-pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.81"
+pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.81.1"
 ```
 
 #####Manualy
