@@ -3,7 +3,7 @@ vlc-sdk
 
 ###Receiving a SDK Key
 
-Request a SDK key online at [http://app.velocee.com/generic](http://app.velocee.com/generic) .
+Request a SDK key online at [http://app.velocee.com/generic](http://app.velocee.com/generic)
 
 
 
@@ -21,10 +21,10 @@ pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.88
 
 #####Manually
 
-1. Download vlc-sdk as a zip file and extract it somewhere. Drag the SDK resources (libVlcSdk.a, VlcSdk.h and VlcSdkRes.bundle) to the project or add them by right clicking the Project Navigator and selecting ‘Add files to...“ . It is recommended to use “Copy Items..” and “Create groups…”.
-2. Verify libVlcSdk.a id added to the project settings “Build Phases” / ”Link Binary With Libraries”.
-4. Verify VlcSdkRes.bundle is added to the project settings “Build Phases” / “Copy Bundle Resources”.
-5. Add the following frameworks/libraries to the project settings “Build Phases” / “Link Binary With Libraries”:
+1. Download vlc-sdk as a zip file and extract it somewhere. Drag the SDK resources (libVlcSdk.a, VlcSdk.h and VlcSdkRes.bundle) to the project or add them by right clicking the Project Navigator and selecting ‘Add files to...“ . It is recommended to use “Copy Items..” and “Create groups…”
+2. Verify libVlcSdk.a id added to the project settings “Build Phases” / ”Link Binary With Libraries”
+3. Verify VlcSdkRes.bundle is added to the project settings “Build Phases” / “Copy Bundle Resources”
+4. Add the following frameworks/libraries to the project settings “Build Phases” / “Link Binary With Libraries”:
     - MediaPlayer.framework
     - SystemConfiguration.framework
     - AVFoundation.framework
@@ -33,7 +33,7 @@ pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.88
     - UIKit.framework
     - Foundation.framework
     - libsqlite3.0.dylib
-6. In the project settings, add ”-ObjC” to “Other Linker Flags” located in “Build Settings” / “Linking”.
+5. In the project settings, add ”-ObjC” to “Other Linker Flags” located in “Build Settings” / “Linking”
 
 
 #####Third Party Libraries
@@ -59,7 +59,7 @@ https://github.com/CocoaLumberjack/CocoaLumberjack
 ###Post Installation
 
 
-1. In the project settings, enable “Background fetch” located in “Capabilities” / “Background Modes”.
+1. In the project settings, enable “Background fetch” located in “Capabilities” / “Background Modes”
 2. In your application delegate, create or edit the performFetchWithCompletionHandler method to include the following line:
 ```
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -90,15 +90,15 @@ Supported resources are images (all types) and HTML5 videos.
 
 The library requires a one time initialization upon application startup. You should call the method “veloceeStart” preferably in your application delegate / didFinishLaunchingWithOptions:
 
-1. Add the sdk’s header file to your application delegate (#import “VlcSdk.h”).
-2. Call [[VlcSdk getObj] veloceeStart: <your SDK key> ].
+1. Add the sdk’s header file to your application delegate (#import “VlcSdk.h”)
+2. Call [[VlcSdk getObj] veloceeStart: <your SDK key> ]
 
 
 #####Using Within a WebView
 
 The Velocee SDK provides an WebView delegate for the application’s WebView to use. In order to use Velocee’s WebView delegate you should use the SDK’s setDelegate method instead of the web view one. In case the application has a webview delegate it will be chained.
 
-1. Add the sdk’s header file to your controller (#import “VlcSdk.h”).
+1. Add the sdk’s header file to your controller (#import “VlcSdk.h”)
 2. call ```[webView setDelegate:[[VlcSdk getObj]setDelegate:self]];```
 
 
