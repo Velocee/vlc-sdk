@@ -10,7 +10,7 @@ Request a SDK key online at [http://app.velocee.com/generic](http://app.velocee.
 ###Installation
 
 
-You can install install the SDK either manually or with CocoaPods (preffered).
+You can install the SDK either manually or with CocoaPods (preferred).
 
 #####Using CocoaPods
 
@@ -19,7 +19,7 @@ Add the following line to the podfile:
 pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.0.88"
 ```
 
-#####Manualy
+#####Manually
 
 1. Download vlc-sdk as a zip file and extract it somewhere. Drag the SDK resources (libVlcSdk.a, VlcSdk.h and VlcSdkRes.bundle) to the project or add them by right clicking the Project Navigator and selecting ‘Add files to...“ . It is recommended to use “Copy Items..” and “Create groups…”.
 2. Verify libVlcSdk.a id added to the project settings “Build Phases” / ”Link Binary With Libraries”.
@@ -113,5 +113,5 @@ Both methods returns the input unchanged in case the input URL cannot be found i
 
 #####Labeling The Data
 
-Your application data needs to be labeled in order to fine tune Velocee's recommendation algorithem. Any text can be used as a label. In order to set the current label use the SetTag method ```- (void) SetTag:(NSString *)tag```.
+Your application data needs to be labeled in order to fine tune Velocee's recommendation algorithm. Any text can be used as a label. In order to set the current label use the SetTag method ```- (void) SetTag:(NSString *)tag```.
 Once a label is set it affects all resources until a new label is set or the application is idle for a period of time.
