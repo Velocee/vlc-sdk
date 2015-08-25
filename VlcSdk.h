@@ -39,6 +39,14 @@ typedef enum
 } VlcLogLevels;
 
 
+typedef enum {
+    VlcWl_Prefix,
+    VlcWl_Regex,
+    VlcWl_FileExtension,
+    VlcWl_Suffix
+} VlcWhiteListTypes;
+
+
 
 @interface VlcSdk : UIResponder<UITabBarControllerDelegate>
 
@@ -52,7 +60,8 @@ typedef enum
 -(void) addToReadingList :(NSString*)pageUrl :(NSString*)pageTitle;
 -(void) performFetch: (UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 -(void) bgCompleteNotification: (void (^)())completionHandler;
-
+-(void) setPrefixWhiteList: (NSArray *)whitelist;
+-(void) setWhiteList: (NSArray *)whitelist;
 
 /* helpers */
 -(id)vlcGetData:(vlcDataType)type;
