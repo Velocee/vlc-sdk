@@ -80,6 +80,8 @@ typedef enum {
 - (void) EnableAudio:(BOOL)enable;
 - (BOOL) GetAudioStatus;
 - (void) flushResources;
+- (void) StartAudio;
+
 
 /* audio */
 -(void) ResumeAudio;

@@ -1,14 +1,14 @@
 // Velocee Javascript utilities
-// Version 1.54
+// Version 1.55
 
 //Globals
-var veloceeUtilsVersion = 1.54;
+var veloceeUtilsVersion = 1.55;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
 var vlcAddedYTListeners = false;
 var vlcPlayer;
-var vlcPort = 9701;
+var vlcPort = 8080;
 //var vlcYtPlayers = new Array();
 //var ytEmbedFrame;
 
@@ -491,13 +491,12 @@ function markWallaVideoLinksJsonP(vidsArray, markVids) {
                   //node.onClick=null;
                   //node.addEventListener('click', playVid, false);  //false
                   if (searchStringInArray (s1, vidsArray)!=-1) {
-                  if (node.children[1].children[0].src.indexOf("play.png")!=-1) {
-                  node.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
-                  } else {
-                  node.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
+                    node.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
                   }
+                  else {
+                    node.style.webkitFilter = 'drop-shadow(rgba(255,0,0,0.8) 0 5px 5px)';
                   }
-                  });
+            });
         }
 }
 
@@ -575,6 +574,67 @@ function vlcIsraelAppModifyVidLinksBr(vidsArray, markVids)
            	var videoPlayer = qparams['%40videoPlayer'];
            	var playerID = qparams['playerID'];
            	var vidParams = "videoId="+videoPlayer+"&playerId="+playerID;
+            console.log('lookup vid params:'+vidParams);
+            if (searchStringInArrayItems (vidParams, vidsArray)!=-1) {
+                video.setAttribute('vlc', 1);
+                inCache = 1;
+                if (markVids) {
+                    video.parentElement.style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                }
+            } else {
+                video.setAttribute('vlc', 0);
+                inCache = 0;
+                if (markVids) {
+                    video.parentElement.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
+                }
+            }
+            //Set listeners
+            console.log("*** Register brightcove player listeners for id:"+video.id);
+            var expId = video.id;
+            vlcRegisterBRHandlersLoop(expId, video, playerID, inCache);
+            vidsCount++;
+        } else {
+            console.log('will not handle video');
+        }
+        if (vidsCount > 5) {
+            //Limit to 5 html5 videos per page to avoid memory issues
+            break;
+        }
+    }
+    return vidsCount.toString();
+}
+
+
+
+/*******************************************************
+ *** USA2Day Video handling - Brightcove Player ***
+ *******************************************************/
+function vlcUsa2DayModifyVidLinksBr(vidsArray, markVids)
+{
+    console.log('*** vlcUsa2DayModifyVidLinksBr ***'+' vids:'+vidsArray);
+    var vidsCount = 0;
+    var setListeners;
+    var inCache = 0;
+    var v = document.getElementsByClassName("BrightcoveExperience");
+    console.log('starting BR loop');
+    for (var i=0; i<v.length; i++) {
+        var video = v[i];
+        console.log('video:'+video.src);
+        if (video.getAttribute('vlc_handlers')) {
+            //continue;
+            console.log('set listeners: 0');
+            setListeners = 0;
+        } else {
+            setListeners = 1;
+        }
+        var s1=video.src;
+        if ((s1.indexOf('127.0.0.1:'+vlcPort)==-1)&&
+            (s1.indexOf("htmlFederated")!=-1)&&(setListeners==1)){
+            console.log('handle video');
+            var qparams = getUrlQueryParams(s1);
+            var videoPlayer = qparams['flashID'].substr(2);
+            var playerID = qparams['playerID'];
+            var vidParams = "videoId="+videoPlayer+"&playerId="+playerID;
             console.log('lookup vid params:'+vidParams);
             if (searchStringInArrayItems (vidParams, vidsArray)!=-1) {
                 video.setAttribute('vlc', 1);
@@ -1263,6 +1323,24 @@ function searchStringInArray (str, strArray) {
     for (var j=0; j<strArray.length; j++) {
         //if (strArray[j].match(str)) return j;
         if (str.indexOf(strArray[j])!=-1) {
+            return j;
+        }
+    }
+    return -1;
+}
+
+
+function searchWallaStringInArray (str, strArray) {
+    var s_str = str.split( '/' );
+    s_str.splice(0,3);
+    s_str.splice(-1,1);
+    var search_str = s_str.join('/');
+    console.log("searching:");
+    console.log("==> "+s_str);
+    console.log("<== "+strArray);
+    for (var j=0; j<strArray.length; j++) {
+        //if (strArray[j].match(str)) return j;
+        if (strArray[j].indexOf(search_str)!=-1) {
             return j;
         }
     }
