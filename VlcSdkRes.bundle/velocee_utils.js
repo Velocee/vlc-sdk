@@ -2,7 +2,7 @@
 // Version 1.55
 
 //Globals
-var veloceeUtilsVersion = 1.55;
+var veloceeUtilsVersion = 1.56;
 var adPages=new Array();
 adPages[0]='http://m.ynet.co.il/Maavaron.aspx'; adPages[1]='http://m.ynet.co.il/MaavaronP.aspx';
 var vlcAddedHTML5Listeners = false;
@@ -753,14 +753,16 @@ function vlcOneAppModifyVidLinks(vidsArray, markVids)
     for (var i=0; i<v.length; i++) {
         var video = v[i];
         var s1=video.href;
-        if (s1.indexOf('127.0.0.1:'+vlcPort)==-1){
+        //if (s1.indexOf('127.0.0.1:'+vlcPort)==-1){
+        //override only if red or nothing
+        if (!video.getAttribute('vlc')||(video.getAttribute('vlc')=='0')) {
             if (searchStringInArray (s1, vidsArray)!=-1) {
-                var vext = "mp4";
-                if (s1.indexOf('m3u8') != -1) {
-                    vext="m3u8";
-                }
-                var s2='http://127.0.0.1:'+vlcPort+'/v.'+vext+'?url='+s1;
-                video.setAttribute('src',s2);
+                //var vext = "mp4";
+                //if (s1.indexOf('m3u8') != -1) {
+                //    vext="m3u8";
+                //}
+                //var s2='http://127.0.0.1:'+vlcPort+'/v.'+vext+'?url='+s1;
+                //video.setAttribute('src',s2);
                 video.setAttribute('vlc', 1);
                 video.parentElement.style.boxShadow = "3px 3px 3px 3px blue";
                 video.style.boxShadow = "3px 3px 3px 3px blue";
@@ -771,11 +773,11 @@ function vlcOneAppModifyVidLinks(vidsArray, markVids)
             }
             vidsCount++;
         } else {
-            video.setAttribute('vlc', 0);
-            video.parentElement.style.boxShadow = "3px 3px 3px 3px red";
-            video.style.boxShadow = "3px 3px 3px 3px red";
+            //video.setAttribute('vlc', 0);
+            //video.parentElement.style.boxShadow = "3px 3px 3px 3px red";
+            //video.style.boxShadow = "3px 3px 3px 3px red";
         }
-        if (vidsCount > 5) {
+        if (vidsCount > 10) {
             //Limit to 5 html5 videos per page to avoid memory issues
             break;
         }
