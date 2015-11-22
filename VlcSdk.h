@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Velocee. All rights reserved.
 //
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
@@ -54,6 +55,7 @@ typedef enum {
 
 +(VlcSdk *)getObj;
 -(id)setDelegate:(UIViewController <UIWebViewDelegate> *)view;
+-(void) setWkWebView:(WKWebView *)wkWebView;
 -(id)setWebViewDelegate:(NSObject <UIWebViewDelegate> *)delegate;
 -(void)veloceeStart:(NSString *)key;
 -(void)veloceeStart:(NSString *)key locale:(NSString *)locale;
