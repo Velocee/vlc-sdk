@@ -1293,6 +1293,52 @@ function markYnetAppVideoLinks(vidsArray, markVids) {
 }
 
 
+/*******************************
+ *** Pplus App Links Link Bg ***
+ *******************************/
+function markPPlusAppVideoLinks(vidsArray, markVids) {
+    if (!markVids) {
+        return;
+    }
+    console.log("modify Pplus App Links");
+    var links = document.links;
+    var count = 0;
+    var cached = 0;
+    var cachedCount = 0;
+    for(var i = 0; i< links.length; i++){
+        cached = 0;
+        var video = links[i];
+        var s1 = links[i].href;
+        if (s1.indexOf('www.ynet.co.il/video?')>-1) {
+            console.log("Ynet video:"+s1);
+            if (video.getAttribute('vlc')) {
+                console.log("Found vlc flag");
+                count++;
+                continue;
+            }
+            if (s1.indexOf('127.0.0.1:'+vlcPort)>-1) {
+                links[i].style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                count++;
+                continue;
+            }
+            count++;
+            //console.log('found video link:'+s1);
+            if (searchStringInArray (s1, vidsArray)!=-1) {
+                console.log("Found cached PPlus App Video");
+                cached = 1;
+                cachedCount++;
+                count++;
+                links[i].style.webkitFilter = 'drop-shadow(rgba(0,0,255,0.8) 0 5px 5px)';
+                continue;
+            }
+            else
+                video.style.webkitFilter = 'drop-shadow(rgba(255,0,55,0.5) 0 5px 5px)';
+        }
+    }
+    console.log("modify PPlus App Links changed:"+count.toString());
+    return cachedCount.toString();
+}
+
 
 /*************************
  *** Utility functions ***
