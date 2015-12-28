@@ -56,6 +56,7 @@ typedef enum {
 +(VlcSdk *)getObj;
 -(id)setDelegate:(UIViewController <UIWebViewDelegate> *)view;
 -(void) setWkWebView:(WKWebView *)wkWebView;
+-(void) wkOnNewPage:(WKWebView *)wkWebView;
 -(id)setWebViewDelegate:(NSObject <UIWebViewDelegate> *)delegate;
 -(void)veloceeStart:(NSString *)key;
 -(void)veloceeStart:(NSString *)key locale:(NSString *)locale;
