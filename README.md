@@ -115,3 +115,93 @@ Both methods returns the input unchanged in case the input URL cannot be found i
 
 Your application data needs to be labeled in order to fine tune Velocee's recommendation algorithm. Any text can be used as a label. In order to set the current label use the SetTag method ```- (void) SetTag:(NSString *)tag```.
 Once a label is set it affects all resources until a new label is set or the application is idle for a period of time.
+
+
+###Audio Plus
+
+Audio+ enables playing user adapted audio content. The module provides a player and retrieves the user specific audio content; it does not include a user interface code. Audio+ plays the track through the current available audio interface and fully supports bluetooth.
+
+#####Implementation Notes
+
+The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. When audio playing is needed the following should be followed:
+
+Call audioPlay or audioPlayAtIndex 
+Show audio interface screen and update it accordingly (see below)
+Call to audioPause, audioPrev & audioNext upon user request
+
+The API provides several methods for getting the audio data, mostly for updating the user interface. Implementors should call the audioRegisterPlaybackEvents to be notified of events where onTrackStart method reflects a new audio track starts playing; Once such a notification arrives, the audio track information can be retrieved via the audioGetMediaInfo call. 
+Querying the  audioGetProgress returns the current playing progress and should be called periodically (preferably using a timer or thread). 
+
+
+#####Properties
+
+The Audio+ module will show the relevant track name/track author in the “Now playing info canter” of OSX and will continue to play in the background (if the host app set the background mode/audio capability), and will resume playing from the last stopped point between application launches.
+
+
+#####API
+
+```
+-(void) audioPlay
+```
+Starts playback.
+
+```
+-(void) audioPrev
+```
+Starts playback of the previous track in the playlist.
+
+```
+-(void) audioNext
+```
+Starts playback of the next track in the playlist.
+
+```
+-(void) audioPause
+```
+Pauses playback.
+
+```
+-(void) audioPlayAtIndex:(int) index
+```
+Starts playback of a specific track.
+
+```
+-(BOOL) audioIsPlaying
+```
+Returns whether the mediaplayer is playing.
+
+```
+-(int) audioGetProgress
+```
+Gets the current playback position in milliseconds.
+
+```
+- (vlcMediaInfo *) audioGetMediaInfo
+```
+Returns track information using the vlcMediaInfo interface. The interface has four properties:
+	NSString *title: current track name
+	NSString *author: current tracks author
+	int length: length of track, in millisec
+	NSArray *playlistURL: array of strings with track names
+
+```
+- (void) audioRegisterPlaybackEvents
+```
+Register for playback events.
+
+```
+- (void) audioUnregisterPlaybackEvents
+```
+Unregister for playback events.
+The playback events are defined in VlcAudioProtocol which has two methods:
+
+```
+- (void) onTrackStart:(NSString *)title :(NSString *)author :(int)timeInMilli
+```
+Triggered when a new track is started.
+
+```
+- (void) onPlaylistLoaded:(NSArray *)titles
+```
+Triggered when new playlist is loaded from the server.
+
