@@ -121,22 +121,6 @@ Once a label is set it affects all resources until a new label is set or the app
 
 Audio+ enables playing user adapted audio content. The module provides a player and retrieves the user specific audio content; it does not include a user interface code. Audio+ plays the track through the current available audio interface and fully supports bluetooth.
 
-#####Implementation Notes
-
-The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. When audio playing is needed the following should be followed:
-
-Call audioPlay or audioPlayAtIndex 
-Show audio interface screen and update it accordingly (see below)
-Call to audioPause, audioPrev & audioNext upon user request
-
-The API provides several methods for getting the audio data, mostly for updating the user interface. Implementors should call the audioRegisterPlaybackEvents to be notified of events where onTrackStart method reflects a new audio track starts playing; Once such a notification arrives, the audio track information can be retrieved via the audioGetMediaInfo call. 
-Querying the  audioGetProgress returns the current playing progress and should be called periodically (preferably using a timer or thread). 
-
-
-#####Properties
-
-The Audio+ module will show the relevant track name/track author in the “Now playing info canter” of OSX and will continue to play in the background (if the host app set the background mode/audio capability), and will resume playing from the last stopped point between application launches.
-
 
 #####API
 
@@ -179,10 +163,10 @@ Gets the current playback position in milliseconds.
 - (vlcMediaInfo *) audioGetMediaInfo
 ```
 Returns track information using the vlcMediaInfo interface. The interface has four properties:
-	NSString *title: current track name
-	NSString *author: current tracks author
-	int length: length of track, in millisec
-	NSArray *playlistURL: array of strings with track names
+_NSString *title: current track name_
+_NSString *author: current tracks author_
+_int length: length of track, in millisec_
+_NSArray *playlistURL: array of strings with track names_
 
 ```
 - (void) audioRegisterPlaybackEvents
@@ -204,4 +188,57 @@ Triggered when a new track is started.
 - (void) onPlaylistLoaded:(NSArray *)titles
 ```
 Triggered when new playlist is loaded from the server.
+
+
+#####Implementation Notes
+
+The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. When audio playing is needed the following should be followed:
+
+Call audioPlay or audioPlayAtIndex 
+Show audio interface screen and update it accordingly (see below)
+Call to audioPause, audioPrev & audioNext upon user request
+
+The API provides several methods for getting the audio data, mostly for updating the user interface. Implementors should call the audioRegisterPlaybackEvents to be notified of events where onTrackStart method reflects a new audio track starts playing; Once such a notification arrives, the audio track information can be retrieved via the audioGetMediaInfo call. 
+Querying the  audioGetProgress returns the current playing progress and should be called periodically (preferably using a timer or thread). 
+
+
+#####Properties
+
+The Audio+ module will show the relevant track name/track author in the “Now playing info canter” of OSX and will continue to play in the background (if the host app set the background mode/audio capability), and will resume playing from the last stopped point between application launches.
+
+
+###Motion Detection
+
+Velocee’s motion detection API enables users to get events when motion events occur on supported devices. Using the API an application can get motion detection events for walking, running, cycling, automotive & stationary states. The API abstracts the CMMotionActivityManager class. 
+
+
+#####API
+
+The following methods will start & stop receiving events, respectively.
+```
+- (BOOL) motionStartDetection:(id<VlcMotionProtocol>) receiver;
+```
+```
+- (void) motionStopDetection;
+```
+
+The events are received using the VlcMotionProtocol protocol via the following method:
+
+```
+- (void) onMotionDetection:(vlcMotionStates) newState;
+```
+
+Where available states are defined in the vlcMotionStates enum:
+```
+vlcMotionStationary
+vlcMotionWalking
+vlcMotionRunning
+vlcMotionCycling
+vlcMotionAutomotive
+```
+
+#####Implementation Details
+
+The events are fired for state changes only (e.g. between walking & automotive but not between automotive & stationary which indicates a car stop). Events are fired only when probability is high.
+Starting the motion API requires a one-time user confirmation; a dialog with **“... Would Like To Access Your Motion Activity”** will prompt.
 
