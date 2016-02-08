@@ -164,14 +164,10 @@ Gets the current playback position in milliseconds.
 ```
 Returns track information using the vlcMediaInfo interface. The interface has four properties:
 
-_NSString *title: current track name_
-
-_NSString *author: current tracks author_
-
-_int length: length of track, in millisec_
-
-_NSArray *playlistURL: array of strings with track names_
-
+_NSString *title: current track name_  
+_NSString *author: current tracks author_  
+_int length: length of track, in millisec_  
+_NSArray *playlistURL: array of strings with track names_  
 
 ```
 - (void) audioRegisterPlaybackEvents
