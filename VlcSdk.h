@@ -121,7 +121,7 @@ typedef enum
 - (BOOL) audioIsPlaying;
 - (void) audioSetProgress;
 - (int) audioGetProgress;
-- (void) audioPlayAtIndex;
+- (void) audioPlayAtIndex:(int)index;
 - (void) audioRegisterPlaybackEvents:(id<VlcAudioProtocol>) receiver;
 - (void) audioUnregisterPlaybackEvents;
 - (vlcMediaInfo *) audioGetMediaInfo;
