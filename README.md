@@ -163,10 +163,15 @@ Gets the current playback position in milliseconds.
 - (vlcMediaInfo *) audioGetMediaInfo
 ```
 Returns track information using the vlcMediaInfo interface. The interface has four properties:
+
 _NSString *title: current track name_
+
 _NSString *author: current tracks author_
+
 _int length: length of track, in millisec_
+
 _NSArray *playlistURL: array of strings with track names_
+
 
 ```
 - (void) audioRegisterPlaybackEvents
@@ -222,13 +227,13 @@ The following methods will start & stop receiving events, respectively.
 - (void) motionStopDetection;
 ```
 
-The events are received using the VlcMotionProtocol protocol via the following method:
+The events are received using the *VlcMotionProtocol* protocol via the following method:
 
 ```
 - (void) onMotionDetection:(vlcMotionStates) newState;
 ```
 
-Where available states are defined in the vlcMotionStates enum:
+Where available states are defined in the *vlcMotionStates* enum:
 ```
 vlcMotionStationary
 vlcMotionWalking
