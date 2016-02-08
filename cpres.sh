@@ -1,13 +1,13 @@
 #!/bin/bash
 # h file
 echo "Searching .h file..."
-hfile=($(find ../velocee-dev-ios/iPhoneSDK -name "VlcSdk.h" | xargs ls -l))
+hfile=($(find ../velocee-dev-ios/iPhoneSDK/VlcSdk/VlcSdk/ -name "VlcSdk.h" | xargs ls -l))
 echo ${hfile[@]}
 if diff ./VlcSdk.h ${hfile[8]}; then
 	echo 'files are equal.'
 fi
 read -p "$(tput setaf 3)Enter to continue & copy, Ctrl-C quits.$(tput sgr0)" ui
-find ../velocee-dev-ios/iPhoneSDK -name "VlcSdk.h" | xargs ls | xargs -I{} cp {} .
+find ../velocee-dev-ios/iPhoneSDK/VlcSdk/VlcSdk/ -name "VlcSdk.h" | xargs ls | xargs -I{} cp {} .
 if [[ $? -ne 0 ]]
 then
     echo "$(tput setaf 1)Error copying h file$(tput sgr0)"

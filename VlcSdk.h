@@ -10,6 +10,7 @@
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
+#define VLCSDK_MOTION_CONFIDENCE    2
 
 typedef enum {
     vdata_clientId,
@@ -49,6 +50,30 @@ typedef enum {
 
 
 
+typedef enum
+{
+    vlcMotionStationary,
+    vlcMotionWalking,
+    vlcMotionRunning,
+    vlcMotionCycling,
+    vlcMotionAutomotive
+} vlcMotionStates;
+
+
+
+
+@interface vlcMediaInfo : NSObject
+    @property (nonatomic, assign) NSString *title;
+    @property (nonatomic, assign) NSString *author;
+    @property (nonatomic, assign) int length;
+    @property (nonatomic, assign) NSString *playlistURL;
+@end
+
+
+@protocol VlcAudioProtocol;
+@protocol VlcMotionProtocol;
+
+
 @interface VlcSdk : UIResponder<UITabBarControllerDelegate>
 
 @property (copy, nonatomic) void (^backgroundSessionCompletionHandler)();
@@ -81,14 +106,30 @@ typedef enum {
 - (void) SetLogLevel:(VlcLogLevels) logLevel;
 - (void) SetLocale:(NSString *)locale;
 - (void) SetTag:(NSString *)tag;
-- (void) EnableAudio:(BOOL)enable;
 - (BOOL) GetAudioStatus;
 - (void) flushResources;
-- (void) StartAudio;
 
 
 /* audio */
--(void) ResumeAudio;
+- (void) EnableAudio:(BOOL)enable;  /* remove external */
+- (void) StartAudio:(id<VlcAudioProtocol>) receiver; /* remove external */
+- (void) StartAudio; /* remove external */
+- (void) audioPlay;
+- (void) audioPause;
+- (void) audioNext;
+- (void) audioPrev;
+- (BOOL) audioIsPlaying;
+- (void) audioSetProgress;
+- (int) audioGetProgress;
+- (void) audioPlayAtIndex;
+- (void) audioRegisterPlaybackEvents:(id<VlcAudioProtocol>) receiver;
+- (void) audioUnregisterPlaybackEvents;
+- (vlcMediaInfo *) audioGetMediaInfo;
+
+
+/* motion */
+- (BOOL) motionStartDetection:(id<VlcMotionProtocol>) receiver;
+- (void) motionStopDetection;
 
 
 /* dialogs */
@@ -108,4 +149,27 @@ typedef enum {
 @property (nonatomic, strong) NSObject *veloceeWebViewDelegate;
 
 @end
+
+
+
+@protocol VlcAudioProtocol <NSObject>
+
+@optional
+
+- (void) onTrackStart:(NSString *)title :(NSString *)author :(int)timeInSec;
+- (void) onlistLoaded:(NSArray *)titles;
+
+@end
+
+
+@protocol VlcMotionProtocol <NSObject>
+
+@required
+
+- (void) onMotionDetetion:(vlcMotionStates) newState;
+
+@end
+
+
+
 

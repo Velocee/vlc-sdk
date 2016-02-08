@@ -16,7 +16,7 @@ You can install the SDK either manually or with CocoaPods (preferred).
 
 Add the following line to the podfile:
 ```
-pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.1.7"
+pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.1.8"
 ```
 
 #####Manually
@@ -166,7 +166,7 @@ Returns track information using the vlcMediaInfo interface. The interface has fo
 
 _NSString *title: current track name_  
 _NSString *author: current tracks author_  
-_int length: length of track, in millisec_  
+_int length: length of track, in seconds_ 
 _NSArray *playlistURL: array of strings with track names_  
 
 ```
@@ -181,7 +181,7 @@ Unregister for playback events.
 The playback events are defined in VlcAudioProtocol which has two methods:
 
 ```
-- (void) onTrackStart:(NSString *)title :(NSString *)author :(int)timeInMilli
+- (void) onTrackStart:(NSString *)title :(NSString *)author :(int)timeInSec
 ```
 Triggered when a new track is started.
 
