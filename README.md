@@ -119,7 +119,8 @@ Once a label is set it affects all resources until a new label is set or the app
 
 ###Audio Plus
 
-Audio+ enables playing user adapted audio content. The module provides a player and retrieves the user specific audio content; it does not include a user interface code. Audio+ plays the track through the current available audio interface and fully supports bluetooth.
+Audio+ enables playing user adapted audio content. The module provides a player and retrieves the user specific audio content; an optional user interface is also included. Audio+ plays the track through the current available audio interface and fully supports bluetooth.
+
 
 
 #####API
@@ -189,18 +190,24 @@ Triggered when a new track is started.
 - (void) onPlaylistLoaded:(NSArray *)titles
 ```
 Triggered when new playlist is loaded from the server.
+```
+- (void) StartAudio
+```
+Starts the audio using the internal UI.
 
 
 #####Implementation Notes
 
-The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. When audio playing is needed the following should be followed:
+The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. Users can use the optional user interface which is bundeled with the SDK or create their own for greater flexibility. When using the bundeled UI the SDK handles the audio actions & events and there's no need for additional code other than starting the audio. When users provide their own UI they should also provide matching UI code.
+
+When using the bundeled user interface users should only call the **StartAudio** method; this will show the player UI and automaticlly start playing. When users provide their own UI they should take care of showing the audio UI and hadnle relevant actions and events, as follows:
 
 Call audioPlay or audioPlayAtIndex 
-Show audio interface screen and update it accordingly (see below)
-Call to audioPause, audioPrev & audioNext upon user request
+Update the user interface accordingly (see below)
+Call to audioPause, audioPrev & audioNext upon user action
 
 The API provides several methods for getting the audio data, mostly for updating the user interface. Implementors should call the audioRegisterPlaybackEvents to be notified of events where onTrackStart method reflects a new audio track starts playing; Once such a notification arrives, the audio track information can be retrieved via the audioGetMediaInfo call. 
-Querying the  audioGetProgress returns the current playing progress and should be called periodically (preferably using a timer or thread). 
+Querying the  audioGetProgress returns the current playing progress and should be called periodically (preferably using a timer or thread). onListLoaded is called when a new playing list is loaded.
 
 
 #####Properties
