@@ -202,9 +202,13 @@ The Audio+ is initialized with Velocee’s SDK initialization; no additional ini
 
 When using the bundeled user interface users should only call the **StartAudio** method; this will show the player UI and automaticlly start playing. When users provide their own UI they should take care of showing the audio UI and hadnle relevant actions and events, as follows:
 
+
 Call audioPlay or audioPlayAtIndex 
+
 Update the user interface accordingly (see below)
+
 Call to audioPause, audioPrev & audioNext upon user action
+
 
 The API provides several methods for getting the audio data, mostly for updating the user interface. Implementors should call the audioRegisterPlaybackEvents to be notified of events where onTrackStart method reflects a new audio track starts playing; Once such a notification arrives, the audio track information can be retrieved via the audioGetMediaInfo call. 
 Querying the  audioGetProgress returns the current playing progress and should be called periodically (preferably using a timer or thread). onListLoaded is called when a new playing list is loaded.
