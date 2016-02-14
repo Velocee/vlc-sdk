@@ -198,9 +198,9 @@ Starts the audio using the internal UI.
 
 #####Implementation Notes
 
-The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. Users can use the optional user interface which is bundeled with the SDK or create their own for greater flexibility. When using the bundeled UI the SDK handles the audio actions & events and there's no need for additional code other than starting the audio. When users provide their own UI they should also provide matching UI code.
+The Audio+ is initialized with Velocee’s SDK initialization; no additional initialization required. Users can use the optional user interface which is bundled with the SDK or create their own for greater flexibility. When using the bundeled UI the SDK handles the audio actions & events and there's no need for additional code other than starting the audio. When users provide their own UI they should also provide matching UI code.
 
-When using the bundeled user interface users should only call the **StartAudio** method; this will show the player UI and automaticlly start playing. When users provide their own UI they should take care of showing the audio UI and hadnle relevant actions and events, as follows:
+When using the bundeled user interface users should only call the **StartAudio** method; this will show the player UI and automatically start playing. When users provide their own UI they should take care of showing the audio UI and hadnle relevant actions and events, as follows:
 
 
 Call audioPlay or audioPlayAtIndex 
