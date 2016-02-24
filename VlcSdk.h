@@ -111,9 +111,9 @@ typedef enum
 
 
 /* audio */
-- (void) EnableAudio:(BOOL)enable;  /* remove external */
-- (void) StartAudio:(id<VlcAudioProtocol>) receiver; /* remove external */
-- (void) StartAudio; /* remove external */
+- (void) EnableAudio:(BOOL)enable;  /* for internal user */
+- (void) _audioUpdateClientGroupBySite:(NSString *)site_id; /* for internal use */
+- (void) StartAudio;
 - (void) audioPlay;
 - (void) audioPause;
 - (void) audioNext;
@@ -157,7 +157,7 @@ typedef enum
 @optional
 
 - (void) onTrackStart:(NSString *)title :(NSString *)author :(int)timeInSec;
-- (void) onlistLoaded:(NSArray *)titles;
+- (void) onListLoaded:(NSArray *)titles;
 
 @end
 
@@ -165,8 +165,9 @@ typedef enum
 @protocol VlcMotionProtocol <NSObject>
 
 @required
-
 - (void) onMotionDetetion:(vlcMotionStates) newState;
+@optional
+- (void) onMotionLogEvents:(NSString *)message;
 
 @end
 
