@@ -10,7 +10,7 @@ echo "$(tput setaf 3)Updating README...$(tput sgr0)"
 sed -i -e "s/$ltag/$1/" README.md
 echo "$(tput setaf 3)Updating Podspec...$(tput sgr0)"
 sed -i -e "s/$ltag/$1/" vlc-sdk.podspec
-sed -i -e "s/VELOCEE_SDK_VERSION.*$/VELOCEE_SDK_VERSION \"$1\"/" VlcSdk.h  
+sed -i -e "s/VELOCEE_SDK_VERSION.*$/VELOCEE_SDK_VERSION @\"$1\"/" VlcSdk.h  
 echo "$(tput setaf 3)Tagging & Bagging...($1)$(tput sgr0)"
 git add . --all
 git commit -m "$1"
