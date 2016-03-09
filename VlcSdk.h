@@ -8,6 +8,9 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
+// auto generated sdk version
+#define VELOCEE_SDK_VERSION "1.0"
+
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
 #define VLCSDK_MOTION_CONFIDENCE    2
