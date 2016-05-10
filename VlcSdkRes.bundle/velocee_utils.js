@@ -35,12 +35,12 @@ function vlcOnPageLoad()
     //document.body.style.webkitTouchCallout='none';
     //setTimeout(modifyYTLinks, 5000);
     //setTimeout(vlcHtml5VideoProxy(), 5000);
-    addVlcPlayer();
+    //addVlcPlayer();
 }
 
 function vlcTestFunc()
 {
-    alert('This is velocee test');
+    //alert('This is velocee test');
 }
 
 function runTest()
