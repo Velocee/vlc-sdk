@@ -5,11 +5,15 @@
 //  Created by Velocee on 7/9/14.
 //  Copyright (c) 2014 Velocee. All rights reserved.
 //
+
+#ifndef VLCSDK_H
+#define VLCSDK_H
+
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
 // auto generated sdk version
-#define VELOCEE_SDK_VERSION @"2.2.0"
+#define VELOCEE_SDK_VERSION @"2.2.1"
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
@@ -62,7 +66,13 @@ typedef enum
     vlcMotionAutomotive
 } vlcMotionStates;
 
-
+typedef enum
+{
+    vlcAudioCtrlNone,
+    vlcAudioCtrlIdle,
+    vlcAudioCtrlGroupUpdated,
+    vlcAudioCtrlPLaylistUpdated
+} vlcAudioCtrlStates;
 
 
 @interface vlcMediaInfo : NSObject
@@ -128,6 +138,14 @@ typedef enum
 - (void) audioRegisterPlaybackEvents:(id<VlcAudioProtocol>) receiver;
 - (void) audioUnregisterPlaybackEvents;
 - (vlcMediaInfo *) audioGetMediaInfo;
+- (void) audioSeekToTime:(int)seconds;
+- (NSArray *) audioGetPlaylists;
+- (NSDate*) audioGetLastPlayListUpdate;
+- (vlcAudioCtrlStates) audioGetCurrentState;
+- (void) audioSaveCurrentPlayState;
+//- (UIViewController*) getPLayerViewController;
+- (UIViewController*) getPLayerViewControllerWithSourceName:(NSString*)source andSiteUrl:(NSString*)sourceUrl;
+
 
 
 /* motion */
@@ -174,6 +192,6 @@ typedef enum
 
 @end
 
-
+#endif
 
 
