@@ -34,5 +34,5 @@ Pod::Spec.new do |s|
   s.dependency 'CocoaAsyncSocket', '~> 7.3'
 #  s.dependency 'MBProgressHUD', '~> 0.9'
   s.dependency 'CocoaLumberjack', '~> 2.0'
-  s.dependency 'MBCircularProgressBar'
+#  s.dependency 'MBCircularProgressBar'
 end
