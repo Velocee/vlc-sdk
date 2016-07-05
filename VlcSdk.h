@@ -13,7 +13,7 @@
 #import <WebKit/WebKit.h>
 
 // auto generated sdk version
-#define VELOCEE_SDK_VERSION @"2.2.1.4"
+#define VELOCEE_SDK_VERSION @"2.2.1.5"
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
@@ -145,6 +145,8 @@ typedef enum
 - (void) audioSaveCurrentPlayState;
 //- (UIViewController*) getPLayerViewController;
 - (UIViewController*) getPLayerViewControllerWithSourceName:(NSString*)source andSiteUrl:(NSString*)sourceUrl;
+- (UIButton *) getAudioButton;
+- (void) getShortUrlForUrl :(NSString*)longUrlStr :(void (^)(NSString *responseObj))onSuccess onFail:(void (^)())onFail;
 
 
 
