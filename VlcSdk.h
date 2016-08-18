@@ -13,7 +13,7 @@
 #import <WebKit/WebKit.h>
 
 // auto generated sdk version
-#define VELOCEE_SDK_VERSION @"2.2.2"
+#define VELOCEE_SDK_VERSION @"2.2.3"
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
@@ -70,6 +70,7 @@ typedef enum
 {
     vlcAudioCtrlNone,
     vlcAudioCtrlIdle,
+    vlcAudioCtrlUpdatingGroup,
     vlcAudioCtrlGroupUpdated,
     vlcAudioCtrlPLaylistUpdated
 } vlcAudioCtrlStates;
@@ -131,6 +132,7 @@ typedef enum
 - (void) audioPause;
 - (void) audioNext;
 - (void) audioPrev;
+- (void) audioPlayNewList;
 - (BOOL) audioIsPlaying;
 - (void) audioSetProgress;
 - (int) audioGetProgress;
@@ -143,8 +145,14 @@ typedef enum
 - (NSDate*) audioGetLastPlayListUpdate;
 - (vlcAudioCtrlStates) audioGetCurrentState;
 - (void) audioSaveCurrentPlayState;
+- (NSString*) audioGetCurrentPlaylistSource;
 //- (UIViewController*) getPLayerViewController;
 - (UIViewController*) getPLayerViewControllerWithSourceName:(NSString*)source andSiteUrl:(NSString*)sourceUrl;
+/*
+ * Get Custom player with custom nib and properties
+ */
+- (UIViewController*) getCustomPlayerViewControllerWithSourceName:(NSString*)source andSiteUrl:(NSString*)sourceUrl andBundle:(NSBundle*)bundle andNibName:(NSString*)nibName progressColor:(UIColor*)progressColor playlistCells:(NSArray*)playlistCells;
+/*****************/
 - (UIButton *) getAudioButton;
 - (void) getShortUrlForUrl :(NSString*)longUrlStr :(void (^)(NSString *responseObj))onSuccess onFail:(void (^)())onFail;
 
