@@ -5,7 +5,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "vlc-sdk"
-  s.version      = "2.2.4"
+  s.version      = "2.2.5"
   s.summary      = "Velocee VlcSdk"
 
   s.description  = <<-DESC
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   }
   s.author       = { "elibabila" => "support@velocee.com" }
   s.platform     = :ios, "7.0"
-  s.source        = { :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.2.4" }
+  s.source        = { :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.2.5" }
   
 
   s.source_files = '*.h'
@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   s.libraries = "sqlite3.0", "VlcSdk"
   s.preserve_paths = 'libVlcSdk.a'
   s.xcconfig     = { 'LIBRARY_SEARCH_PATHS' => '"$(PODS_ROOT)/vlc-sdk"' }
-  s.dependency "AFNetworking", "~> 2.0"
+#  s.dependency "AFNetworking", "~> 2.0"
   s.dependency 'CocoaAsyncSocket', '~> 7.3'
 #  s.dependency 'MBProgressHUD', '~> 0.9'
   s.dependency 'CocoaLumberjack', '~> 2.0'
