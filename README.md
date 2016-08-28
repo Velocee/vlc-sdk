@@ -1,14 +1,9 @@
-vlc-sdk
+#Velocee SDK
 =======
-
-###Receiving a SDK Key
-
-Request a SDK key online at [http://app.velocee.com/generic](http://app.velocee.com/generic)
+Velocee InstantRadio SDK transforms any mobile app into a personalized mobile radio station. The SDK requires an SDK key.
 
 
-
-###Installation
-
+###SDK Installation
 
 You can install the SDK either manually or with CocoaPods (preferred).
 
@@ -16,7 +11,7 @@ You can install the SDK either manually or with CocoaPods (preferred).
 
 Add the following line to the podfile:
 ```
-pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.2.3"
+pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.2.4"
 ```
 
 #####Manually
@@ -35,15 +30,13 @@ pod "vlc-sdk", :git => "https://github.com/Velocee/vlc-sdk.git", :tag => "2.2.3"
     - libsqlite3.0.dylib
 5. In the project settings, add ”-ObjC” to “Other Linker Flags” located in “Build Settings” / “Linking”
 
+###Receiving a SDK Key
+
+Request a SDK key online at [http://app.velocee.com/generic](http://app.velocee.com/generic)
 
 #####Third Party Libraries
 
 The SDK uses the following third party libraries which must be added manually.
-
-AFNetworking
-```
-https://github.com/AFNetworking/AFNetworking
-```
 
 CocoaAsyncSocket
 ```
@@ -253,4 +246,13 @@ vlcMotionAutomotive
 
 The events are fired for state changes only (e.g. between walking & automotive but not between automotive & stationary which indicates a car stop). Events are fired only when probability is high.
 Starting the motion API requires a one-time user confirmation; a dialog with **“... Would Like To Access Your Motion Activity”** will prompt.
+
+### 3rd party libraries used internally
+
+AFNetworking
+```
+https://github.com/AFNetworking/AFNetworking
+```
+
+
 
