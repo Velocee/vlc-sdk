@@ -13,7 +13,7 @@
 #import <WebKit/WebKit.h>
 
 // auto generated sdk version
-#define VELOCEE_SDK_VERSION @"2.2.5"
+#define VELOCEE_SDK_VERSION @"AUTO_GEN"
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
@@ -107,6 +107,7 @@ typedef enum
 -(void) setWhiteList: (NSArray *)whitelist;
 
 /* helpers */
+- (BOOL) isNetworkConnected;
 -(id)vlcGetData:(vlcDataType)type;
 -(void)getCacheStatsParameters:(void (^)(NSString *s))completionBlock;
 
@@ -148,6 +149,7 @@ typedef enum
 - (NSString*) audioGetCurrentPlaylistSource;
 //- (UIViewController*) getPLayerViewController;
 - (UIViewController*) getPLayerViewControllerWithSourceName:(NSString*)source andSiteUrl:(NSString*)sourceUrl;
+- (UIViewController*) getPLayerViewControllerWithSourceName:(NSString*)source andSiteUrl:(NSString*)sourceUrl isSdk:(BOOL)isSdk siteId:(NSString*)siteId siteChanged:(BOOL)siteChanged;
 /*
  * Get Custom player with custom nib and properties
  */
@@ -155,8 +157,15 @@ typedef enum
 /*****************/
 - (UIButton *) getAudioButton;
 - (void) getShortUrlForUrl :(NSString*)longUrlStr :(void (^)(NSString *responseObj))onSuccess onFail:(void (^)())onFail;
-
-
+- (NSInteger) audioGetNewItemsCount;
+/*
+ * Private methods
+ */
+- (void) _audioUpdatePlayerSourceId:(NSString *)sourceId sourceName:(NSString*)sourceName;
+- (void) _audioSetShowPLayerOnLauncherLoad:(BOOL)value;
+- (BOOL) _audioGetShowPLayerOnLauncherLoad;
+- (UIView*) _audioGetBadgeViewWithParentView:(UIView*)parent internal:(BOOL)internal;
+- (void)_audioSetBadgeWithBadgeView:(UIView*)badgeView value:(NSInteger)value;
 
 /* motion */
 - (BOOL) motionStartDetection:(id<VlcMotionProtocol>) receiver;
