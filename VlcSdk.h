@@ -13,7 +13,7 @@
 #import <WebKit/WebKit.h>
 
 // auto generated sdk version
-#define VELOCEE_SDK_VERSION @"2.2.6"
+#define VELOCEE_SDK_VERSION @"2.2.7"
 
 #define LauncherSitesUpdatedNotification @"LauncherSitesUpdatedNotification"
 #define VLCSDK_USE_PROGRESS_HUD 0
